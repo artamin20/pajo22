@@ -1,0 +1,78 @@
+﻿@model IEnumerable<pajo22.Models.ProductModels>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/head_foot.cshtml";
+}
+
+<h1>Index</h1>
+
+<div class="max-w-[1440px] mx-auto px-3">
+    <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+        <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
+            <div class="text-2xl md:text-3xl opacity-70">
+                Index
+            </div>
+            <a asp-action="Create" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">Create New</a>
+        </div>
+
+        <div class="md:w-8/12 lg:w-9/12">
+            <div class="relative overflow-x-auto shadow-md rounded-xl">
+                <table class="w-full text-sm text-right text-gray-600">
+                    <thead class="text-xs text-gray-700 bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Price
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Image
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Description
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Subgroup
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-100 transition text-xs border-b">
+                                <td class="px-6 py-4 font-medium">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="px-6 py-4">
+                                    @Html.DisplayFor(modelItem => item.price)
+                                </td>
+                                <td class="px-6 py-4">
+                                    <!-- نشان دادن تصویر -->
+                                    <img src="@item.image" alt="Product Image" class="w-20 h-20 object-cover rounded-lg">
+                                </td>
+                                <td class="px-6 py-4">
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td class="px-6 py-4">
+                                    @Html.DisplayFor(modelItem => item.Subgroup.Name)
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-blue-500 text-white">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-indigo-500 text-purple">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="border rounded-lg px-2 py-1 bg-red-500 text-white">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

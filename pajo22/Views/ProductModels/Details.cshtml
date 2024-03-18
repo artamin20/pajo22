@@ -1,0 +1,38 @@
+﻿@model pajo22.Models.ProductModels
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/head_foot.cshtml";
+}
+
+<h1>Details</h1>
+
+<div class="max-w-[1440px] mx-auto px-3">
+    <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+        <h4 class="text-2xl md:text-3xl opacity-70">Product Details</h4>
+        <hr class="my-4 border-gray-300" />
+
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
+            <dt class="text-gray-600 font-semibold">Name:</dt>
+            <dd class="text-gray-800">@Html.DisplayFor(model => model.Name)</dd>
+            <dt class="text-gray-600 font-semibold">Price:</dt>
+            <dd class="text-gray-800">@Html.DisplayFor(model => model.price)</dd>
+            <dt class="text-gray-600 font-semibold">Image:</dt>
+            <dd>
+                <div class="image-container max-w-[300px] max-h-[300px] overflow-hidden bg-gray-200 rounded-lg">
+                    <img src="@Html.DisplayFor(model => model.image)" alt="Product Image" class="w-full h-auto" />
+                    <!-- نشان دادن تصویر -->
+                </div>
+            </dd>
+            <dt class="text-gray-600 font-semibold">Description:</dt>
+            <dd class="text-gray-800">@Html.DisplayFor(model => model.Description)</dd>
+            <dt class="text-gray-600 font-semibold">Subgroup:</dt>
+            <dd class="text-gray-800">@Html.DisplayFor(model => model.Subgroup.Name)</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="max-w-[1440px] mx-auto px-3 mt-6">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="text-blue-500 hover:underline">Edit</a> |
+    <a asp-action="Index" class="text-blue-500 hover:underline">Back to List</a>
+</div>
