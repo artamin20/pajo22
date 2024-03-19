@@ -22,26 +22,26 @@ namespace pajo22.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Add predefined data if the database is empty
-            if (!Database.IsSqlServer()) // Assuming SQL Server, change if using a different database
+            
+            if (!Database.IsSqlServer()) 
             {
-                return; // Predefined data seeding only for SQL Server
+                return; // Predefined data seeding 
             }
 
-            // Add predefined data for Groups
+            
             modelBuilder.Entity<GroupModels>().HasData(
                 new GroupModels { Id = 111, Name = "کالا های دیجیتال" },
                 new GroupModels { Id = 22, Name = "لوازم خانگی" }
             );
 
-            // Add predefined data for Subgroups
+           
             modelBuilder.Entity<SubgroupModels>().HasData(
                 new SubgroupModels { Id = 111, Name = "گوشی موبایل", GroupID = 111 },
                 new SubgroupModels { Id = 22, Name = "ماشین لباس شویی", GroupID = 22 },
                 new SubgroupModels { Id = 33, Name = "لب تاب", GroupID = 111 }
             );
 
-            // Add predefined data for Products
+            // دیتا ریزی
             modelBuilder.Entity<ProductModels>().HasData(
                 new ProductModels { Id = 17811, Name = "سامسونگ Samsung A54", Price = 13000000, Image = "/images/ph6.png", Description = "mid-range Samsung", Color = "gray", SubgroupId = 111 },
                 new ProductModels { Id = 278, Name = "سامسونگ Samsung S23", Price = 2300000, Image = "/images/ph3.png", Description = "flagship Samsung", Color = "Blue", SubgroupId = 111 },

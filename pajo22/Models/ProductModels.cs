@@ -12,10 +12,10 @@ namespace pajo22.Models
         public int Id { get; set; }
 
         [Display(Name = "نام")]
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         [Display(Name = "قیمت")]
-        public int? Price { get; set; }
+        public required int Price { get; set; }
 
         [Display(Name = "عکس")]
         public string? Image { get; set; }
