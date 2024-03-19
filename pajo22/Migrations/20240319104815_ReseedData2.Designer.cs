@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pajo22.Data;
 
@@ -11,9 +12,11 @@ using pajo22.Data;
 namespace pajo22.Migrations
 {
     [DbContext(typeof(pajo22Context))]
-    partial class pajo22ContextModelSnapshot : ModelSnapshot
+    [Migration("20240319104815_ReseedData2")]
+    partial class ReseedData2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +90,7 @@ namespace pajo22.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 17811,
+                            Id = 1711,
                             Color = "gray",
                             Description = "mid-range Samsung",
                             Image = "/images/ph6.png",
@@ -97,7 +100,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 278,
+                            Id = 27,
                             Color = "Blue",
                             Description = "flagship Samsung",
                             Image = "/images/ph3.png",
@@ -107,7 +110,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 378,
+                            Id = 37,
                             Color = "Green",
                             Description = "it's iPhone, just buy it",
                             Image = "/images/ph1.png",
@@ -117,7 +120,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 478,
+                            Id = 47,
                             Color = "Green",
                             Description = "it's cheap, why not",
                             Image = "/images/ph5.png",
@@ -127,7 +130,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 578,
+                            Id = 57,
                             Color = "Green",
                             Description = "the classic from the past",
                             Image = "/images/ph6.png",
@@ -137,7 +140,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 678,
+                            Id = 67,
                             Color = "Green",
                             Description = "Iranian made cheap",
                             Image = "/images/p7.png",
@@ -147,7 +150,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 778,
+                            Id = 77,
                             Color = "Green",
                             Description = "Asus TUFF gaming",
                             Image = "~/images/f2.png",
@@ -157,7 +160,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 878,
+                            Id = 87,
                             Color = "black",
                             Description = "Acer regular laptop",
                             Image = "/images/f3.png",
@@ -167,7 +170,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 978,
+                            Id = 97,
                             Color = "black",
                             Description = "Lenovo gaming laptop",
                             Image = "/images/f1.png",
@@ -177,7 +180,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 1780,
+                            Id = 170,
                             Color = "black",
                             Description = "Snowa Iranian made washing machine",
                             Image = "/images/a1.png",
@@ -187,7 +190,7 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 1781,
+                            Id = 171,
                             Color = "Green",
                             Description = "Snowa fridge",
                             Image = "/images/a2.png",

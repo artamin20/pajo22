@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pajo22.Data;
 
@@ -11,9 +12,11 @@ using pajo22.Data;
 namespace pajo22.Migrations
 {
     [DbContext(typeof(pajo22Context))]
-    partial class pajo22ContextModelSnapshot : ModelSnapshot
+    [Migration("20240319101228_SeedData7")]
+    partial class SeedData7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,67 +90,67 @@ namespace pajo22.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 17811,
+                            Id = 111,
                             Color = "gray",
                             Description = "mid-range Samsung",
-                            Image = "/images/ph6.png",
+                            Image = "~/images/ph6.png",
                             Name = "سامسونگ Samsung A54",
                             Price = 13000000,
                             SubgroupId = 111
                         },
                         new
                         {
-                            Id = 278,
+                            Id = 2,
                             Color = "Blue",
                             Description = "flagship Samsung",
-                            Image = "/images/ph3.png",
+                            Image = "~/images/ph3.png",
                             Name = "سامسونگ Samsung S23",
                             Price = 2300000,
                             SubgroupId = 111
                         },
                         new
                         {
-                            Id = 378,
+                            Id = 3,
                             Color = "Green",
                             Description = "it's iPhone, just buy it",
-                            Image = "/images/ph1.png",
+                            Image = "~/images/ph1.png",
                             Name = "Iphone 13 آیفون",
                             Price = 4000000,
                             SubgroupId = 111
                         },
                         new
                         {
-                            Id = 478,
+                            Id = 4,
                             Color = "Green",
                             Description = "it's cheap, why not",
-                            Image = "/images/ph5.png",
+                            Image = "~/images/ph5.png",
                             Name = "Xiaomi Redmi شیائومی",
                             Price = 6000000,
                             SubgroupId = 111
                         },
                         new
                         {
-                            Id = 578,
+                            Id = 5,
                             Color = "Green",
                             Description = "the classic from the past",
-                            Image = "/images/ph6.png",
+                            Image = "~/images/ph6.png",
                             Name = "Classic Gold Phone گوشی کلاسیک",
                             Price = 1000000,
                             SubgroupId = 111
                         },
                         new
                         {
-                            Id = 678,
+                            Id = 6,
                             Color = "Green",
                             Description = "Iranian made cheap",
-                            Image = "/images/p7.png",
+                            Image = "~/images/p7.png",
                             Name = "GPlus 128 gig جی پلاس",
                             Price = 4000000,
                             SubgroupId = 111
                         },
                         new
                         {
-                            Id = 778,
+                            Id = 7,
                             Color = "Green",
                             Description = "Asus TUFF gaming",
                             Image = "~/images/f2.png",
@@ -157,40 +160,40 @@ namespace pajo22.Migrations
                         },
                         new
                         {
-                            Id = 878,
+                            Id = 8,
                             Color = "black",
                             Description = "Acer regular laptop",
-                            Image = "/images/f3.png",
+                            Image = "~/images/f3.png",
                             Name = "Acer Aspire ایسر",
                             Price = 35000000,
                             SubgroupId = 33
                         },
                         new
                         {
-                            Id = 978,
+                            Id = 9,
                             Color = "black",
                             Description = "Lenovo gaming laptop",
-                            Image = "/images/f1.png",
+                            Image = "~/images/f1.png",
                             Name = "Lenovo Legion لنوو",
                             Price = 48000000,
                             SubgroupId = 33
                         },
                         new
                         {
-                            Id = 1780,
+                            Id = 10,
                             Color = "black",
                             Description = "Snowa Iranian made washing machine",
-                            Image = "/images/a1.png",
+                            Image = "~/images/a1.png",
                             Name = "Snowa اسنوا لباس شویی",
                             Price = 45000000,
                             SubgroupId = 22
                         },
                         new
                         {
-                            Id = 1781,
+                            Id = 11,
                             Color = "Green",
                             Description = "Snowa fridge",
-                            Image = "/images/a2.png",
+                            Image = "~/images/a2.png",
                             Name = "Snowa اسنوا یخچال",
                             Price = 12000000,
                             SubgroupId = 22

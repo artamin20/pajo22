@@ -78,7 +78,7 @@ namespace pajo22.Controllers
                             await productImage.CopyToAsync(stream);
                         }
 
-                        productModels.image = "/Images/" + filename;
+                        productModels.Image = "/Images/" + filename;
                     }
                     else
                     {

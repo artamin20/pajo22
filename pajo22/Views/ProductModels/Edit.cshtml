@@ -21,17 +21,17 @@
                     <span asp-validation-for="Name" class="text-red-500 text-xs italic"></span>
                 </div>
                 <div class="mb-4">
-                    <label asp-for="price" class="block text-gray-700 text-sm font-bold mb-2"></label>
-                    <input asp-for="price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
-                    <span asp-validation-for="price" class="text-red-500 text-xs italic"></span>
+                    <label asp-for="Price" class="block text-gray-700 text-sm font-bold mb-2"></label>
+                    <input asp-for="Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
+                    <span asp-validation-for="Price" class="text-red-500 text-xs italic"></span>
                 </div>
                 <div class="mb-4">
-                    <label asp-for="image" class="block text-gray-700 text-sm font-bold mb-2"></label>
+                    <label asp-for="Image" class="block text-gray-700 text-sm font-bold mb-2"></label>
                     <input type="file" name="imageFile" accept="image/*" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
                     <div class="image-container mt-2 max-w-[300px] max-h-[300px] overflow-hidden bg-gray-200 rounded-lg">
-                        <img src="@Html.DisplayFor(model => model.image)" alt="Product Image" class="w-full h-auto" /> <!-- نشان دادن تصویر -->
+                        <img src="@Html.DisplayFor(model => model.Image)" alt="Product Image" class="w-full h-auto" /> <!-- نشان دادن تصویر -->
                     </div>
-                    <span asp-validation-for="image" class="text-red-500 text-xs italic"></span>
+                    <span asp-validation-for="Image" class="text-red-500 text-xs italic"></span>
                 </div>
                 <div class="mb-4">
                     <label asp-for="Description" class="block text-gray-700 text-sm font-bold mb-2"></label>

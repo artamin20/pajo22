@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pajo22.Models
@@ -12,16 +15,16 @@ namespace pajo22.Models
         public string? Name { get; set; }
 
         [Display(Name = "قیمت")]
-        public int? price { get; set; }
-        
+        public int? Price { get; set; }
+
         [Display(Name = "عکس")]
-        public string? image { get; set; }
+        public string? Image { get; set; }
 
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 
         [Display(Name = "رنگ")]
-        public string? Color { get; set; } 
+        public string? Color { get; set; }
 
         public int SubgroupId { get; set; }
 
@@ -29,4 +32,8 @@ namespace pajo22.Models
         [ForeignKey("SubgroupId")]
         public virtual SubgroupModels? Subgroup { get; set; }
     }
+ 
+
 }
+
+
