@@ -57,7 +57,7 @@ namespace pajo22.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,price,image,Description,SubgroupId,color")] ProductModels productModels, IFormFile productImage)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,Image,Description,SubgroupId,color")] ProductModels productModels, IFormFile productImage)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace pajo22.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["SubgroupId"] = new SelectList(_context.Set<SubgroupModels>(), "Id", "Id", productModels.SubgroupId);
+            ViewData["SubgroupId"] = new SelectList(_context.Set<SubgroupModels>(), "Id", "Name", productModels.SubgroupId);
             return View(productModels);
         }
 
@@ -112,7 +112,7 @@ namespace pajo22.Controllers
             {
                 return NotFound();
             }
-            ViewData["SubgroupId"] = new SelectList(_context.SubgroupModels, "Id", "Id", productModels.SubgroupId);
+            ViewData["SubgroupId"] = new SelectList(_context.SubgroupModels, "Id", "Name", productModels.SubgroupId);
             return View(productModels);
         }
 
@@ -121,7 +121,7 @@ namespace pajo22.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,price,image,Description,SubgroupId")] ProductModels productModels)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Image,Description,SubgroupId")] ProductModels productModels, IFormFile productImage)
         {
             if (id != productModels.Id)
             {
@@ -132,7 +132,39 @@ namespace pajo22.Controllers
             {
                 try
                 {
-                    _context.Update(productModels);
+                   
+                    var existingProduct = await _context.ProductModels.FindAsync(id);
+
+                    
+                    if (productImage != null && productImage.Length > 0)
+                    {
+                        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                        var filename = Path.GetFileName(productImage.FileName);
+                        var ext = Path.GetExtension(filename);
+                        if (allowedExtensions.Contains(ext))
+                        {
+                            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", filename);
+                            using (var stream = new FileStream(path, FileMode.Create))
+                            {
+                                await productImage.CopyToAsync(stream);
+                            }
+                            productModels.Image = "/Images/" + filename;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("productImage", "Invalid file type. Only JPEG and PNG are allowed.");
+                            ViewData["SubgroupId"] = new SelectList(_context.Set<SubgroupModels>(), "Id", "Name", productModels.SubgroupId);
+                            return View(productModels);
+                        }
+                    }
+                    else
+                    {
+                        
+                        productModels.Image = existingProduct.Image;
+                    }
+
+                    
+                    _context.Entry(existingProduct).CurrentValues.SetValues(productModels);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -148,9 +180,10 @@ namespace pajo22.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubgroupId"] = new SelectList(_context.SubgroupModels, "Id", "Id", productModels.SubgroupId);
+            ViewData["SubgroupId"] = new SelectList(_context.SubgroupModels, "Id", "Name", productModels.SubgroupId);
             return View(productModels);
         }
+
 
         // GET: ProductModels/Delete/5
         public async Task<IActionResult> Delete(int? id)

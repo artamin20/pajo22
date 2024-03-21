@@ -5,13 +5,13 @@
     Layout = "~/Views/Shared/head_foot.cshtml";
 }
 
-<h1 class="text-3xl font-semibold mb-4">Create</h1>
+
 
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
         <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
             <div class="text-2xl md:text-3xl opacity-70">
-                Create
+                اضافه کردن محصول
             </div>
             <a asp-action="Index" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">Back to List</a>
         </div>
@@ -50,8 +50,8 @@
                         <select asp-for="SubgroupId" class="form-select mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" asp-items="ViewBag.SubgroupId"></select>
                     </div>
                 <div class="flex items-center justify-between">
-                    <input type="submit" value="Create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
-                    <a asp-action="Index" class="text-gray-600 text-sm hover:underline">Back to List</a>
+                    <input type="submit" value="ساختن" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                    <a asp-action="Index" class="text-gray-600 text-sm hover:underline">بازگشت به لیست</a>
                 </div>
             </form>
         </div>

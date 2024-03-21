@@ -15,7 +15,7 @@ namespace pajo22.Models
         public required string Name { get; set; }
 
         [Display(Name = "قیمت")]
-        public required int Price { get; set; }
+        public int Price { get; set; }
 
         [Display(Name = "عکس")]
         public string? Image { get; set; }

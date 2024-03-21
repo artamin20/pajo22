@@ -11,11 +11,7 @@
         <!-- فیلتر محصولات -->
         <div class="md:w-4/12 lg:w-3/12 md:mr-5 mb-5 md:mb-0">
             <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
-                <div class="my-5 lg:my-10">
-                    <a href="/productModels" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded mb-3 block">اضافه کردن محصول</a>
-                    <a href="/subGroupModels" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded mb-3 block">اضافه کردن زیر گروه</a>
-                    <a href="/groupModels" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded block">اضافه کردن گروه</a>
-                </div>
+
                 <div>
                     <div class="text-lg font-medium">
                         بر اساس نام:
@@ -39,7 +35,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:w-8/12 lg:w-9/12" id="productList">
             @foreach (var product in Model)
             {
-                <a href="./single-product.html" class="my-2 py-2 md:p-3 border rounded-xl flex items-center sm:inline hover:shadow-lg transition product-item">
+                <a href="">
                     <div class="image-box sm:mb-6">
                         <div>
                             <img class="hover:scale-105 transition rounded-md sm:rounded-3xl w-24 sm:w-full mx-auto" src="@Html.DisplayFor(modelItem => product.Image)" alt="Product Image" />

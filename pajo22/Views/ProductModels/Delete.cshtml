@@ -9,32 +9,32 @@
 
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
-        <h3 class="text-xl md:text-2xl">Are you sure you want to delete this?</h3>
+        <h3 class="text-xl md:text-2xl">آیا از حذف این محصول مطمئن هستید؟</h3>
 
-        <h4 class="text-lg font-semibold mt-6">Product Details</h4>
+        <h4 class="text-lg font-semibold mt-6">جزئیات</h4>
         <hr class="my-4 border-gray-300" />
 
         <dl class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
-            <dt class="text-gray-600 font-semibold">Name:</dt>
+            <dt class="text-gray-600 font-semibold">نام</dt>
             <dd class="text-gray-800">@Html.DisplayFor(model => model.Name)</dd>
-            <dt class="text-gray-600 font-semibold">Price:</dt>
+            <dt class="text-gray-600 font-semibold">قیمت</dt>
             <dd class="text-gray-800">@Html.DisplayFor(model => model.Price)</dd>
-            <dt class="text-gray-600 font-semibold">Image:</dt>
+            <dt class="text-gray-600 font-semibold">تصویر</dt>
             <dd>
                 <div class="image-container mt-2 max-w-[300px] max-h-[300px] overflow-hidden bg-gray-200 rounded-lg">
                     <img src="@Html.DisplayFor(model => model.Image)" alt="Product Image" class="w-full h-auto" />
                     <!-- نشان دادن تصویر -->
                 </div>
             </dd>
-            <dt class="text-gray-600 font-semibold">Description:</dt>
+            <dt class="text-gray-600 font-semibold">مشخصات:</dt>
             <dd class="text-gray-800">@Html.DisplayFor(model => model.Description)</dd>
-            <dt class="text-gray-600 font-semibold">Subgroup:</dt>
+            <dt class="text-gray-600 font-semibold">زیر گروه :</dt>
             <dd class="text-gray-800">@Html.DisplayFor(model => model.Subgroup.Name)</dd>
         </dl>
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button> |
+            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">حذف</button> |
             <a asp-action="Index" class="text-blue-500 hover:underline">Back to List</a>
         </form>
     </div>
