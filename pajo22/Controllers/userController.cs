@@ -16,10 +16,10 @@ namespace pajo22.Controllers
 
         public IActionResult Index(string nameFilter, decimal? minPriceFilter, decimal? maxPriceFilter)
         {
-            // Get all products from the database
+            //تمام محصول 
             var products = _context.ProductModels.AsQueryable();
 
-            // Apply filters if provided
+            // فیلتر ها 
             if (!string.IsNullOrEmpty(nameFilter))
             {
                 products = products.Where(p => p.Name.Contains(nameFilter));
@@ -35,7 +35,7 @@ namespace pajo22.Controllers
                 products = products.Where(p => p.Price <= maxPriceFilter);
             }
 
-            // Return the filtered list of products to the view
+            
             return View(products.ToList());
         }
     }
