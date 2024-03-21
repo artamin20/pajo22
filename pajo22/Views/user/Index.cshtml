@@ -8,30 +8,31 @@
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5 flex flex-col md:flex-row justify-between">
 
-        <!-- فیلتر محصولات -->
+        <!-- Filter Form -->
         <div class="md:w-4/12 lg:w-3/12 md:mr-5 mb-5 md:mb-0">
-            <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
-
-                <div>
-                    <div class="text-lg font-medium">
-                        بر اساس نام:
+            <form asp-action="Index" method="get">
+                <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
+                    <div>
+                        <div class="text-lg font-medium">
+                            بر اساس نام:
+                        </div>
+                    </div>
+                    <input type="text" name="nameFilter" id="nameFilter" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
+                </div>
+                <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
+                    <div>
+                        <div class="opacity-80 mb-1">
+                            بر اساس قیمت:
+                        </div>
+                        <input type="number" name="minPriceFilter" placeholder="Min Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
+                        <input type="number" name="maxPriceFilter" placeholder="Max Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
                     </div>
                 </div>
-                <input type="text" id="nameFilter" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
-            </div>
-            <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
-                <div>
-                    <div class="opacity-80 mb-1">
-                        بر اساس قیمت:
-                    </div>
-                    <input type="number" id="minPriceFilter" placeholder="Min Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
-                    <input type="number" id="maxPriceFilter" placeholder="Max Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
-                </div>
-            </div>
-            <button id="applyFilters" class="bg-blue-500 text-white px-4 py-2 rounded-lg">اعمال فیلتر ها</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">اعمال فیلتر ها</button>
+            </form>
         </div>
 
-        <!-- لیست محصولات -->
+        <!-- Product List -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:w-8/12 lg:w-9/12" id="productList">
             @foreach (var product in Model)
             {
@@ -61,33 +62,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // اعمال عملکرد فیلتر ها 
-        function applyFilters() {
-            var nameFilter = document.getElementById("nameFilter").value.toLowerCase();
-            var minPriceFilter = parseFloat(document.getElementById("minPriceFilter").value);
-            var maxPriceFilter = parseFloat(document.getElementById("maxPriceFilter").value);
-
-            var productList = document.getElementsByClassName("product-item");
-
-            for (var i = 0; i < productList.length; i++) {
-                var productName = productList[i].querySelector(".leading-7").innerText.toLowerCase();
-                var productPrice = parseFloat(productList[i].querySelector(".text-sm").innerText);
-
-                // در صورت نبود محصولات در فیلتر
-                if ((nameFilter !== "" && !productName.includes(nameFilter)) || (minPriceFilter && productPrice < minPriceFilter) || (maxPriceFilter && productPrice > maxPriceFilter)) {
-                    productList[i].style.display = "none";
-                } else {
-                    productList[i].style.display = "block";
-                }
-            }
-        }
-
-        // اعمال دکمه فیلتر 
-        document.getElementById("applyFilters").addEventListener("click", function () {
-            applyFilters();
-        });
-    });
-</script>
