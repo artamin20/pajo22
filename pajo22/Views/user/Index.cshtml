@@ -4,8 +4,9 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/head_foot.cshtml";
 }
-<!-- Include the noUiSlider CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.css" rel="stylesheet">
+<!--  noUiSlider CSS -->
+<link rel="stylesheet" href="~/template/assets/css/nouislider.css" />
+
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5 flex flex-col md:flex-row justify-between">
         <!-- فیلتر محصولات -->
@@ -35,7 +36,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:w-8/12 lg:w-9/12" id="productList">
             @foreach (var product in Model)
             {
-                <a href="./single-product.html" class="my-2 py-2 md:p-3 border rounded-xl flex items-center sm:inline hover:shadow-lg transition product-item">
+                <a href="/productModels" class="my-2 py-2 md:p-3 border rounded-xl flex items-center sm:inline hover:shadow-lg transition product-item">
                     <div class="Image-box sm:mb-6">
                         <div>
                             <img class="hover:scale-105 transition rounded-md sm:rounded-3xl w-24 sm:w-full mx-auto" src="@Html.DisplayFor(modelItem => product.Image)" alt="Product Image" />
@@ -61,8 +62,9 @@
         </div>
     </div>
 </div>
-<!-- Include the noUiSlider JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+<!-- noUiSlider JavaScript -->
+<script src="~/template/assets/js/nouislider.js"></script>
+
 <script>
     var priceSlider = document.getElementById('price-slider');
     var minPriceFilter = document.getElementById('minPriceFilter');
