@@ -121,7 +121,7 @@ namespace pajo22.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Image,Description,SubgroupId")] ProductModels productModels, IFormFile productImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Image,Description,SubgroupId")] ProductModels productModels, IFormFile? productImage)
         {
             if (id != productModels.Id)
             {
