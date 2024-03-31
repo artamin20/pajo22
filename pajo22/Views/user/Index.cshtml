@@ -4,18 +4,19 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/head_foot.cshtml";
 }
+
 <!--  noUiSlider CSS -->
 <link rel="stylesheet" href="~/template/assets/css/nouislider.css" />
 
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5 flex flex-col md:flex-row justify-between">
-        <!-- فیلتر محصولات -->
+        <!-- Product Filters -->
         <div class="md:w-4/12 lg:w-3/12 md:mr-5 mb-5 md:mb-0">
-            <form action="@Url.Action("Index", "user")@ViewContext.HttpContext.Request.QueryString" method="get" id="filterForm">
+            <form action="@Url.Action("Index", "user")" method="get" id="filterForm">
                 <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
                     <div>
                         <div class="text-lg font-medium">
-                            بر اساس نام:
+                            Filter by Name:
                         </div>
                     </div>
                     <input type="text" name="nameFilter" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" value="@ViewContext.HttpContext.Request.Query["nameFilter"]" />
@@ -23,18 +24,18 @@
                 <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
                     <div>
                         <div class="opacity-80 mb-1">
-                            بر اساس قیمت:
+                            Filter by Price:
                             <div id="price-slider" class="mb-4"></div>
                         </div>
                         <input type="number" id="minPriceFilter" name="minPriceFilter" placeholder="Min Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" value="@ViewContext.HttpContext.Request.Query["minPriceFilter"]" />
                         <input type="number" id="maxPriceFilter" name="maxPriceFilter" placeholder="Max Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" value="@ViewContext.HttpContext.Request.Query["maxPriceFilter"]" />
                     </div>
                 </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">اعمال فیلتر ها</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Apply Filters</button>
             </form>
         </div>
 
-        <!-- لیست محصولات -->
+        <!-- Product List -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:w-8/12 lg:w-9/12" id="productList">
             @foreach (var product in Model)
             {
@@ -64,48 +65,48 @@
         </div>
     </div>
 </div>
+
 <!-- noUiSlider JavaScript -->
 <script src="~/template/assets/js/nouislider.js"></script>
 
 <script>
-    var priceSlider = document.getElementById('price-slider');
-    const rangeMin = parseInt(0);
-    const rangeMax = parseInt(100000000);
-    var minPriceFilter = document.getElementById('minPriceFilter');
-    var maxPriceFilter = document.getElementById('maxPriceFilter');
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch product prices dynamically from the model
+        var productPrices = [@Html.Raw(string.Join(",", Model.Select(p => p.Price)))];
 
-    noUiSlider.create(priceSlider, {
-        start: [rangeMin, rangeMax],
-        snap: true,
-        connect: true,
-        range: {
-            'min': 0,
-            '10%': 1000000,
-            '20%': 20000000,
-            '30%': 30000000,
-            '40%': 40000000,
-            '50%': 50000000,
-            '60%': 60000000,
-            '70%': 70000000,
-            '80%': 80000000,
-            '90%': 90000000,
-            'max': 100000000
-        }
+        // Calculate the range of product prices and determine step size
+        var minPrice = Math.min(...productPrices);
+        var maxPrice = Math.max(...productPrices);
+        var stepSize = Math.round((maxPrice - minPrice) / productPrices.length);
 
-    });
+        // Create the price range slider with dynamic steps
+        var priceSlider = document.getElementById('price-slider');
+        noUiSlider.create(priceSlider, {
+            start: [minPrice, maxPrice],
+            connect: true,
+            range: {
+                'min': minPrice,
+                'max': maxPrice
+            },
+            step: stepSize
+        });
 
+        // Bind slider to price filter inputs
+        var minPriceFilter = document.getElementById('minPriceFilter');
+        var maxPriceFilter = document.getElementById('maxPriceFilter');
 
-    priceSlider.noUiSlider.on('update', function (values, handle) {
-        var value = values[handle];
-        handle ? maxPriceFilter.value = value : minPriceFilter.value = value;
-    });
+        priceSlider.noUiSlider.on('update', function (values, handle) {
+            var value = values[handle];
+            handle ? maxPriceFilter.value = value : minPriceFilter.value = value;
+        });
 
+        // Synchronize slider with input fields
+        minPriceFilter.addEventListener('input', function () {
+            priceSlider.noUiSlider.set([this.value, null]);
+        });
 
-    minPriceFilter.addEventListener('input', function () {
-        priceSlider.noUiSlider.set([this.value, null]);
-    });
-
-    maxPriceFilter.addEventListener('input', function () {
-        priceSlider.noUiSlider.set([null, this.value]);
+        maxPriceFilter.addEventListener('input', function () {
+            priceSlider.noUiSlider.set([null, this.value]);
+        });
     });
 </script>
