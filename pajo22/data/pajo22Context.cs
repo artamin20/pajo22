@@ -25,7 +25,7 @@ namespace pajo22.Data
             
             if (!Database.IsSqlServer()) 
             {
-                return; // Predefined data seeding 
+                return; 
             }
 
             

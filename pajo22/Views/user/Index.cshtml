@@ -16,7 +16,7 @@
                 <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
                     <div>
                         <div class="text-lg font-medium">
-                            Filter by Name:
+                            بر اساس نام:
                         </div>
                     </div>
                     <input type="text" name="nameFilter" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" value="@ViewContext.HttpContext.Request.Query["nameFilter"]" />
@@ -24,14 +24,15 @@
                 <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
                     <div>
                         <div class="opacity-80 mb-1">
-                            Filter by Price:
+                            فیلتر بر اساس قیمت :
                             <div id="price-slider" class="mb-4"></div>
                         </div>
-                        <input type="number" id="minPriceFilter" name="minPriceFilter" placeholder="Min Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" value="@ViewContext.HttpContext.Request.Query["minPriceFilter"]" />
+                        <input type="number" id="minPriceFilter" name="minPriceFilter" placeholder="Min Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" value="@ViewContext.HttpContext.Request.Query["minPriceFilter"]" />             
                         <input type="number" id="maxPriceFilter" name="maxPriceFilter" placeholder="Max Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" value="@ViewContext.HttpContext.Request.Query["maxPriceFilter"]" />
                     </div>
                 </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Apply Filters</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">اعمال فیلتر ها</button>
+                <a href="/" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-3 inline-block">نشان دادن تمامی قیمت ها</a>
             </form>
         </div>
 
@@ -71,15 +72,16 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Fetch product prices dynamically from the model
+        // گرفتن قیمت ها
         var productPrices = [@Html.Raw(string.Join(",", Model.Select(p => p.Price)))];
-
-        // Calculate the range of product prices and determine step size
         var minPrice = Math.min(...productPrices);
         var maxPrice = Math.max(...productPrices);
-        var stepSize = Math.round((maxPrice - minPrice) / productPrices.length);
 
-        // Create the price range slider with dynamic steps
+        // گرد کردن قیمت ها
+        minPrice = Math.floor(minPrice);
+        maxPrice = Math.ceil(maxPrice);
+
+        // اسلایدر 
         var priceSlider = document.getElementById('price-slider');
         noUiSlider.create(priceSlider, {
             start: [minPrice, maxPrice],
@@ -88,10 +90,10 @@
                 'min': minPrice,
                 'max': maxPrice
             },
-            step: stepSize
+            step: 1
         });
 
-        // Bind slider to price filter inputs
+        // اتصال اسلایدر به اینپوت
         var minPriceFilter = document.getElementById('minPriceFilter');
         var maxPriceFilter = document.getElementById('maxPriceFilter');
 
@@ -100,7 +102,7 @@
             handle ? maxPriceFilter.value = value : minPriceFilter.value = value;
         });
 
-        // Synchronize slider with input fields
+        // مساوی کردن اسلایدر با اینپوت ها 
         minPriceFilter.addEventListener('input', function () {
             priceSlider.noUiSlider.set([this.value, null]);
         });
