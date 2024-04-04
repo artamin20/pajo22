@@ -5,15 +5,13 @@
     Layout = "~/Views/Shared/head_foot.cshtml";
 }
 
-
-
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
         <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
             <div class="text-2xl md:text-3xl opacity-70">
                 اضافه کردن محصول
             </div>
-            <a asp-action="Index" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">Back to List</a>
+            <a asp-action="Index" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">بازگشت به لیست </a>
         </div>
 
         <div class="md:w-8/12 lg:w-9/12">
@@ -26,13 +24,14 @@
                 </div>
                 <div class="mb-4">
                     <label asp-for="Price" class="block text-gray-700 text-sm font-bold mb-2"></label>
-                    <input asp-for="Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
+                    <input asp-for="Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" type="number" min="0" step="any" pattern="[0-9]*" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter only numbers')" />
                     <span asp-validation-for="Price" class="text-red-500 text-xs italic"></span>
                 </div>
-                <div class="mb-4">
-                    <label asp-for="Image" class="block text-gray-700 text-sm font-bold mb-2"></label>
-                    <input asp-for="Image" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
-                    <input type="file" name="productImage" class="mt-1 block w-full" />
+                <div class="mb-4" id="imageUpload">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">تصویر</label>
+                    <img id="productImagePreview" src="#" alt="Preview Image" class="mb-2" style="max-width: 200px; display: none;" />
+                    <input type="file" name="productImage" id="productImage" class="hidden form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" onchange="readURL(this)" required />
+                    <button type="button" id="showImageUpload" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">انتخاب تصویر</button>
                     <span asp-validation-for="Image" class="text-red-500 text-xs italic"></span>
                 </div>
                 <div class="mb-4">
@@ -45,12 +44,13 @@
                     <input asp-for="Description" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
                     <span asp-validation-for="Description" class="text-red-500 text-xs italic"></span>
                 </div>
-                    <div class="mb-4">
-                        <label asp-for="SubgroupId" class="block text-gray-700 text-sm font-bold mb-2"></label>
-                        <select asp-for="SubgroupId" class="form-select mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" asp-items="ViewBag.SubgroupId"></select>
-                    </div>
+                <div class="mb-4">
+                    <label asp-for="SubgroupId" class="block text-gray-700 text-sm font-bold mb-2"></label>
+                    <select asp-for="SubgroupId" class="form-select mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" asp-items="ViewBag.SubgroupId"></select>
+                    <span asp-validation-for="SubgroupId" class="text-red-500 text-xs italic"></span>
+                </div>
                 <div class="flex items-center justify-between">
-                    <input type="submit" value="ساختن" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                    <input type="submit" value="ذخیره" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
                     <a asp-action="Index" class="text-gray-600 text-sm hover:underline">بازگشت به لیست</a>
                 </div>
             </form>
@@ -59,6 +59,23 @@
 </div>
 
 @section Scripts {
+    <script>
+        document.getElementById("showImageUpload").addEventListener("click", function () {
+            document.getElementById("imageUpload").querySelector("input[type='file']").classList.remove("hidden");
+        });
+
+        document.getElementById("productImage").addEventListener("change", function () {
+            var fileInput = this;
+            var imgPreview = document.getElementById("productImagePreview");
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = "block";
+            }
+            reader.readAsDataURL(file);
+        });
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

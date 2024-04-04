@@ -16,20 +16,27 @@ namespace pajo22.Controllers
 
         public IActionResult Index(string nameFilter, decimal? minPriceFilter, decimal? maxPriceFilter)
         {
-            // Get all products
+            // گرفتن محصولات
             var products = _context.ProductModels.AsQueryable();
 
-            // Apply name filter if provided
+            // فیلتر ها 
             if (!string.IsNullOrEmpty(nameFilter))
             {
                 products = products.Where(p => p.Name.Contains(nameFilter));
             }
 
-            // Find minimum and maximum prices
+            // درصورتی که محصولی پیدا نشد
+            if (!products.Any())
+            {
+                
+                return View("NoProductsFound");
+            }
+
+            // مین و ماکس بودن
             decimal minPrice = products.Min(p => p.Price);
             decimal maxPrice = products.Max(p => p.Price);
 
-            // If price filters are provided, ensure they are within the range of product prices
+            // چک کردن رنج با قیمت
             if (minPriceFilter != null)
             {
                 minPrice = Math.Max(minPrice, (decimal)minPriceFilter);
@@ -40,11 +47,8 @@ namespace pajo22.Controllers
                 maxPrice = Math.Min(maxPrice, (decimal)maxPriceFilter);
             }
 
-            // Filter products based on price range
+            // فیلتر بر اساس قیمت
             products = products.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
-
-            ViewBag.MinPrice = minPrice;
-            ViewBag.MaxPrice = maxPrice;
 
             return View(products.ToList());
         }

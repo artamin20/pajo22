@@ -91,7 +91,7 @@ namespace pajo22.Controllers
             {
                 return NotFound();
             }
-            ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Id", subgroupModels.GroupID);
+            ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Name", subgroupModels.GroupID);
             return View(subgroupModels);
         }
 
