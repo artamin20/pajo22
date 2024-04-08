@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pajo22.Data;
 
@@ -10,9 +11,11 @@ using pajo22.Data;
 namespace pajo22.Migrations
 {
     [DbContext(typeof(pajo22Context))]
-    partial class pajo22ContextModelSnapshot : ModelSnapshot
+    [Migration("20240406154845_AddDecimalPriceColumn")]
+    partial class AddDecimalPriceColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

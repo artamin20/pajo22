@@ -73,6 +73,7 @@ namespace pajo22.Controllers
                     if (allowedExtensions.Contains(ext))
                     {
                         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", filename);
+
                         using (var stream = new FileStream(path, FileMode.Create))
                         {
                             await productImage.CopyToAsync(stream);
@@ -83,7 +84,7 @@ namespace pajo22.Controllers
                     else
                     {
                         ModelState.AddModelError("productImage", "Invalid file type. Only JPEG and PNG are allowed.");
-                        ViewData["SubgroupId"] = new SelectList(_context.Set<SubgroupModels>(), "Id", "Id", productModels.SubgroupId);
+                        ViewData["SubgroupId"] = new SelectList(_context.Set<SubgroupModels>(), "Id", "", productModels.SubgroupId);
                         return View(productModels);
                     }
                 }

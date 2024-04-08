@@ -33,19 +33,22 @@ namespace pajo22.Controllers
             }
 
             // مین و ماکس بودن
-            decimal minPrice = products.Min(p => p.Price);
-            decimal maxPrice = products.Max(p => p.Price);
+            // مین و ماکس بودن
+            decimal? minPrice = products.Min(p => p.Price);
+            decimal? maxPrice = products.Max(p => p.Price);
 
             // چک کردن رنج با قیمت
             if (minPriceFilter != null)
             {
-                minPrice = Math.Max(minPrice, (decimal)minPriceFilter);
+                minPrice = Math.Max(minPrice ?? 0, minPriceFilter.Value);
             }
 
             if (maxPriceFilter != null)
             {
-                maxPrice = Math.Min(maxPrice, (decimal)maxPriceFilter);
+                maxPrice = Math.Min(maxPrice ?? decimal.MaxValue, maxPriceFilter.Value);
             }
+
+
 
             // فیلتر بر اساس قیمت
             products = products.Where(p => p.Price >= minPrice && p.Price <= maxPrice);

@@ -15,13 +15,13 @@ namespace pajo22.Models
         public required string Name { get; set; }
 
         [Display(Name = "قیمت")]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         [Display(Name = "عکس")]
         public string? Image { get; set; }
 
         [Display(Name = "توضیحات")]
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
         [Display(Name = "رنگ")]
         public string? Color { get; set; }
@@ -32,6 +32,7 @@ namespace pajo22.Models
         [ForeignKey("SubgroupId")]
         public virtual SubgroupModels? Subgroup { get; set; }
     }
+
  
 
 }
