@@ -12,6 +12,13 @@ namespace pajo22.Models
 
         public int GroupID { get; set; }
 
+        //father subgroup
+        public int? ParentSubGroupId { get; set; }
+
+        public SubgroupModels? ParentSubGroup { get; set; }
+
+        public ICollection<SubgroupModels>? Children { get; set; }
+
         // اتصال به گروه
         [ForeignKey("GroupID")]
         public virtual GroupModels? GroupModels { get; set; }

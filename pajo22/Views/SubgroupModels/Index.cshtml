@@ -10,52 +10,65 @@
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
         <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
             <div class="text-2xl md:text-3xl opacity-70">
-                زیر گروه ها 
+                زیر گروه ها
             </div>
         </div>
 
-<div class="md:w-8/12 lg:w-9/12">
-    <div class="relative overflow-x-auto shadow-md rounded-xl">
-        <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
-            <div class="text-2xl md:text-3xl opacity-70">
-                
+        <div class="md:w-8/12 lg:w-9/12">
+            <div class="relative overflow-x-auto shadow-md rounded-xl">
+                <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
+
+                    <a asp-action="Create" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">ساختن جدید</a>
+                </div>
+                <table class="w-full text-sm text-right text-gray-600">
+                    <thead class="text-xs text-gray-700 bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                نام گروه
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                گروه والد
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                نام زیرگروه
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                عملیات
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-100 transition text-xs border-b">
+                                <td class="px-6 py-4 font-medium">
+                                    @Html.DisplayFor(modelItem => item.GroupModels.Name)
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if (item.ParentSubGroup != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.ParentSubGroup.Name)
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-blue-500 text-white">ویرایش</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-indigo-500 text-purple">جزئیات</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="border rounded-lg px-2 py-1 bg-red-500 text-white">حذف</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <a asp-action="Create" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">ساختن جدید</a>
         </div>
-        <table class="w-full text-sm text-right text-gray-600">
-            <thead class="text-xs text-gray-700 bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        نام زیرگروه
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        نام گروه
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        عملیات
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr class="hover:bg-gray-100 transition text-xs border-b">
-                        <td class="px-6 py-4 font-medium">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td class="px-6 py-4">
-                            @Html.DisplayFor(modelItem => item.GroupModels.Name)
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-blue-500 text-white">ویرایش</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-indigo-500 text-purple">جزئیات</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="border rounded-lg px-2 py-1 bg-red-500 text-white">حذف</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
 </div>

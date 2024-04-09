@@ -48,35 +48,77 @@ namespace pajo22.Controllers
         // GET: SubgroupModels/Create
         public IActionResult Create()
         {
-            // Retrieve the list of groups from your database or wherever you store them
+            // گرفتن گروه پایه
             List<SelectListItem> groups = _context.GroupModels
                 .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name })
                 .ToList();
 
-            // Add a default option if needed
+            // default
             groups.Insert(0, new SelectListItem { Value = "", Text = "Select a group" });
 
-            // Set ViewBag.GroupID
-            ViewBag.GroupID = groups;
+            // گرفتن زیر گروه ها
+            List<SelectListItem> parentSubgroups = _context.SubgroupModels
+                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name })
+                .ToList();
+
+            // default
+            parentSubgroups.Insert(0, new SelectListItem { Value = "", Text = "Select a parent subgroup" });
+
+            
+            ViewBag.Groups = groups;
+            ViewBag.ParentSubgroups = parentSubgroups;
 
             return View();
         }
+
         // POST: SubgroupModels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,GroupID")] SubgroupModels subgroupModels)
+        public async Task<IActionResult> Create([Bind("Id,Name,GroupID,ParentSubGroupId")] SubgroupModels subgroupModels)
         {
+            // روابط گروه و زیر گروه به هم یکی باشن
+            if (subgroupModels.ParentSubGroupId != null)
+            {
+                var parentSubgroup = await _context.SubgroupModels.FindAsync(subgroupModels.ParentSubGroupId);
+                if (parentSubgroup.GroupID != subgroupModels.GroupID)
+                {
+                    ModelState.AddModelError("ParentSubGroupId", "The selected parent subgroup must belong to the same group.");
+                    // لیست گروه ها
+                    ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Name", subgroupModels.GroupID);
+                    ViewData["ParentSubGroupId"] = new SelectList(_context.SubgroupModels.Where(s => s.GroupID == subgroupModels.GroupID), "Id", "Name", subgroupModels.ParentSubGroupId);
+                    return View(subgroupModels);
+                }
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(subgroupModels);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Id", subgroupModels.GroupID);
+
+            
+            ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Name", subgroupModels.GroupID);
+            ViewData["ParentSubGroupId"] = new SelectList(_context.SubgroupModels.Where(s => s.GroupID == subgroupModels.GroupID), "Id", "Name", subgroupModels.ParentSubGroupId);
+
+            
+            List<SelectListItem> groups = _context.GroupModels
+                .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name })
+                .ToList();
+            groups.Insert(0, new SelectListItem { Value = "", Text = "Select a group" });
+            ViewBag.Groups = groups;
+
+            
+            List<SelectListItem> parentSubgroups = _context.SubgroupModels
+                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name })
+                .ToList();
+
+            
+            parentSubgroups.Insert(0, new SelectListItem { Value = "", Text = "Select a parent subgroup" });
+            ViewBag.ParentSubgroups = parentSubgroups;
+
             return View(subgroupModels);
         }
+
 
         // GET: SubgroupModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -91,20 +133,47 @@ namespace pajo22.Controllers
             {
                 return NotFound();
             }
-            ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Name", subgroupModels.GroupID);
+
+            // Retrieve the list of groups for the ViewBag
+            List<SelectListItem> groups = _context.GroupModels
+                .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name })
+                .ToList();
+            groups.Insert(0, new SelectListItem { Value = "", Text = "Select a group" });
+            ViewBag.Groups = groups;
+
+            // Retrieve the list of subgroups 
+            List<SelectListItem> parentSubgroups = _context.SubgroupModels
+                .Where(s => s.GroupID == subgroupModels.GroupID)
+                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name })
+                .ToList();
+            parentSubgroups.Insert(0, new SelectListItem { Value = "", Text = "Select a parent subgroup" });
+            ViewBag.ParentSubgroups = parentSubgroups;
+
             return View(subgroupModels);
         }
 
         // POST: SubgroupModels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GroupID")] SubgroupModels subgroupModels)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GroupID,ParentSubGroupId")] SubgroupModels subgroupModels)
         {
             if (id != subgroupModels.Id)
             {
                 return NotFound();
+            }
+
+            //چک کردن مساوی بودن گروه بالا
+            if (subgroupModels.ParentSubGroupId != null)
+            {
+                var parentSubgroup = await _context.SubgroupModels.FindAsync(subgroupModels.ParentSubGroupId);
+                if (parentSubgroup.GroupID != subgroupModels.GroupID)
+                {
+                    ModelState.AddModelError("ParentSubGroupId", "The selected parent subgroup must belong to the same group.");
+                    
+                    ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Name", subgroupModels.GroupID);
+                    ViewData["ParentSubGroupId"] = new SelectList(_context.SubgroupModels.Where(s => s.GroupID == subgroupModels.GroupID), "Id", "Name", subgroupModels.ParentSubGroupId);
+                    return View(subgroupModels);
+                }
             }
 
             if (ModelState.IsValid)
@@ -127,9 +196,13 @@ namespace pajo22.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Id", subgroupModels.GroupID);
+
+            
+            ViewData["GroupID"] = new SelectList(_context.GroupModels, "Id", "Name", subgroupModels.GroupID);
+            ViewData["ParentSubGroupId"] = new SelectList(_context.SubgroupModels.Where(s => s.GroupID == subgroupModels.GroupID), "Id", "Name", subgroupModels.ParentSubGroupId);
             return View(subgroupModels);
         }
+
 
         // GET: SubgroupModels/Delete/5
         public async Task<IActionResult> Delete(int? id)

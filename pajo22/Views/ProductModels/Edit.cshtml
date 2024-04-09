@@ -5,13 +5,10 @@
     Layout = "~/Views/Shared/head_foot.cshtml";
 }
 
-
-
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
         <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
             <div class="text-2xl md:text-3xl opacity-70">
-              
             </div>
             <a asp-action="Index" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">بازگشت به لیست </a>
         </div>
@@ -27,7 +24,7 @@
                 </div>
                 <div class="mb-4">
                     <label asp-for="Price" class="block text-gray-700 text-sm font-bold mb-2"></label>
-                    <input asp-for="Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
+                    <input asp-for="Price" id="priceInput" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" type="text" min="0" step="any" pattern="[0-9,.]*" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter only numbers')" />
                     <span asp-validation-for="Price" class="text-red-500 text-xs italic"></span>
                 </div>
                 <div class="mb-4" id="imageUpload">
@@ -56,7 +53,7 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <input type="submit" value="ذخیره" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
-                    <a asp-action="Index" class="text-gray-600 text-sm hover:underline">Back to List</a>
+                    <a asp-action="Index" class="text-gray-600 text-sm hover:underline">بازگشت به لیست</a>
                 </div>
             </form>
         </div>
@@ -65,20 +62,56 @@
 
 @section Scripts {
     <script>
-        document.getElementById("showImageUpload").addEventListener("click", function () {
-            document.getElementById("imageUpload").querySelector("input[type='file']").classList.remove("hidden");
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            var priceInput = document.getElementById("priceInput");
 
-        document.getElementById("productImage").addEventListener("change", function () {
-            var fileInput = this;
-            var imgPreview = document.getElementById("productImagePreview");
-            var file = fileInput.files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                imgPreview.src = e.target.result;
-                imgPreview.style.display = "block";
+            priceInput.addEventListener("input", function (event) {
+                // Get the raw price value
+                var value = event.target.value;
+
+                // Clean the price value by removing non-digit characters
+                var cleanedValue = value.replace(/[^\d]/g, "");
+
+                // Add separators to the cleaned value
+                var formattedValue = addSeparator(cleanedValue);
+
+                // Update the price input field with the formatted value
+                event.target.value = formattedValue;
+            });
+
+            // Function to add separators to the price value
+            function addSeparator(value) {
+                // Split the value into integer and decimal parts
+                var parts = value.split(".");
+                var integerPart = parts[0];
+                var decimalPart = parts.length > 1 ? "." + parts[1] : "";
+
+                // Add separators to the integer part
+                var formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                // Combine the formatted integer part with the decimal part
+                var formattedValue = formattedIntegerPart + decimalPart;
+
+                return formattedValue;
             }
-            reader.readAsDataURL(file);
+
+            // Show image upload input when the button is clicked
+            document.getElementById("showImageUpload").addEventListener("click", function () {
+                document.getElementById("imageUpload").querySelector("input[type='file']").classList.remove("hidden");
+            });
+
+            // Preview the selected image
+            document.getElementById("productImage").addEventListener("change", function () {
+                var fileInput = this;
+                var imgPreview = document.getElementById("productImagePreview");
+                var file = fileInput.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = "block";
+                }
+                reader.readAsDataURL(file);
+            });
         });
     </script>
     @{

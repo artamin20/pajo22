@@ -24,7 +24,7 @@
                 </div>
                 <div class="mb-4">
                     <label asp-for="Price" class="block text-gray-700 text-sm font-bold mb-2"></label>
-                    <input asp-for="Price" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" type="number" min="0" step="any" pattern="[0-9]*" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter only numbers')" />
+                    <input asp-for="Price" id="priceInput" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" type="text" min="0" step="any" pattern="[0-9,.]*" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter only numbers')" />
                     <span asp-validation-for="Price" class="text-red-500 text-xs italic"></span>
                 </div>
                 <div class="mb-4" id="imageUpload">
@@ -60,20 +60,38 @@
 
 @section Scripts {
     <script>
-        document.getElementById("showImageUpload").addEventListener("click", function () {
-            document.getElementById("imageUpload").querySelector("input[type='file']").classList.remove("hidden");
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            var priceInput = document.getElementById("priceInput");
 
-        document.getElementById("productImage").addEventListener("change", function () {
-            var fileInput = this;
-            var imgPreview = document.getElementById("productImagePreview");
-            var file = fileInput.files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                imgPreview.src = e.target.result;
-                imgPreview.style.display = "block";
-            }
-            reader.readAsDataURL(file);
+            priceInput.addEventListener("input", function (event) {
+                // گرفتن زنده قیمت
+                var value = event.target.value;
+
+                // پاک سازی قیمت
+                var cleanedValue = value.replace(/[^\d]/g, "");
+
+                // اضافه کردن فرمت
+                var formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                // برگردوندن قیمت به فیلد
+                event.target.value = formattedValue;
+            });
+
+            document.getElementById("showImageUpload").addEventListener("click", function () {
+                document.getElementById("imageUpload").querySelector("input[type='file']").classList.remove("hidden");
+            });
+
+            document.getElementById("productImage").addEventListener("change", function () {
+                var fileInput = this;
+                var imgPreview = document.getElementById("productImagePreview");
+                var file = fileInput.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = "block";
+                }
+                reader.readAsDataURL(file);
+            });
         });
     </script>
     @{
