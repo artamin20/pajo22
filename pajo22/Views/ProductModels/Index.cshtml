@@ -34,6 +34,9 @@
                                 زیر گروه
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                وضعیت
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 عملیات
                             </th>
                         </tr>
@@ -57,6 +60,16 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     @Html.DisplayFor(modelItem => item.Subgroup.Name)
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if (item.Status == ProductStatus.Active)
+                                    {
+                                        <span class="bg-green-500 text-white text-xs rounded-full px-2 py-1">فعال</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="bg-red-500 text-white text-xs rounded-full px-2 py-1">غیرفعال</span>
+                                    }
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex">

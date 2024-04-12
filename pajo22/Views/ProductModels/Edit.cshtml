@@ -35,7 +35,6 @@
                     <span asp-validation-for="Image" class="text-red-500 text-xs italic"></span>
                 </div>
 
-
                 <div class="mb-4">
                     <label asp-for="Color" class="block text-gray-700 text-sm font-bold mb-2"></label>
                     <input asp-for="Color" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
@@ -51,6 +50,17 @@
                     <select asp-for="SubgroupId" class="form-select mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" asp-items="ViewBag.SubgroupId"></select>
                     <span asp-validation-for="SubgroupId" class="text-red-500 text-xs italic"></span>
                 </div>
+
+                <div class="mb-4">
+                    <label asp-for="Status" class="block text-gray-700 text-sm font-bold mb-2"></label>
+                    <select asp-for="Status" class="form-select mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-red-500 text-xs italic"></span>
+                </div>
+
+
                 <div class="flex items-center justify-between">
                     <input type="submit" value="ذخیره" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
                     <a asp-action="Index" class="text-gray-600 text-sm hover:underline">بازگشت به لیست</a>
@@ -66,41 +76,35 @@
             var priceInput = document.getElementById("priceInput");
 
             priceInput.addEventListener("input", function (event) {
-                // Get the raw price value
                 var value = event.target.value;
 
-                // Clean the price value by removing non-digit characters
+                // پاک سازی قیمت
                 var cleanedValue = value.replace(/[^\d]/g, "");
 
-                // Add separators to the cleaned value
                 var formattedValue = addSeparator(cleanedValue);
 
-                // Update the price input field with the formatted value
+                // اضافه کردن فرمت
                 event.target.value = formattedValue;
             });
 
-            // Function to add separators to the price value
             function addSeparator(value) {
-                // Split the value into integer and decimal parts
                 var parts = value.split(".");
                 var integerPart = parts[0];
                 var decimalPart = parts.length > 1 ? "." + parts[1] : "";
 
-                // Add separators to the integer part
+                // اضافه کردن فرمت
                 var formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-                // Combine the formatted integer part with the decimal part
                 var formattedValue = formattedIntegerPart + decimalPart;
 
                 return formattedValue;
             }
 
-            // Show image upload input when the button is clicked
+            // نشان دادن دکمه اینپوت
             document.getElementById("showImageUpload").addEventListener("click", function () {
                 document.getElementById("imageUpload").querySelector("input[type='file']").classList.remove("hidden");
             });
 
-            // Preview the selected image
+            // نشان دادن تصویر اصلی
             document.getElementById("productImage").addEventListener("change", function () {
                 var fileInput = this;
                 var imgPreview = document.getElementById("productImagePreview");

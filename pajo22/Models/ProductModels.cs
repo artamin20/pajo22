@@ -1,18 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pajo22.Models
 {
+    public enum ProductStatus
+    {
+        Active,
+        Delisted,
+        Inactive
+    }
+
     public class ProductModels
     {
         [Key]
         public int Id { get; set; }
 
         [Display(Name = "نام")]
-        public required string Name { get; set; }
+        [Required]
+        public string Name { get; set; }
 
         [Display(Name = "قیمت")]
         public decimal Price { get; set; }
@@ -21,7 +26,8 @@ namespace pajo22.Models
         public string? Image { get; set; }
 
         [Display(Name = "توضیحات")]
-        public required string Description { get; set; }
+        [Required]
+        public string Description { get; set; }
 
         [Display(Name = "رنگ")]
         public string? Color { get; set; }
@@ -31,10 +37,8 @@ namespace pajo22.Models
         // ارتباط بین محصولات و زیر گروه
         [ForeignKey("SubgroupId")]
         public virtual SubgroupModels? Subgroup { get; set; }
+
+        // Enum property to indicate status
+        public ProductStatus Status { get; set; } = ProductStatus.Active;
     }
-
- 
-
 }
-
-

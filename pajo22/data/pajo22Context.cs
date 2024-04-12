@@ -56,7 +56,9 @@ namespace pajo22.Data
                 new ProductModels { Id = 978, Name = "Lenovo Legion لنوو", Price = 48000000, Image = "/images/f1.png", Description = "Lenovo gaming laptop", Color = "black", SubgroupId = 33 },
                 new ProductModels { Id = 1780, Name = "Snowa اسنوا لباس شویی", Price = 45000000, Image = "/images/a1.png", Description = "Snowa Iranian made washing machine", Color = "black", SubgroupId = 22 },
                 new ProductModels { Id = 1781, Name = "Snowa اسنوا یخچال", Price = 12000000, Image = "/images/a2.png", Description = "Snowa fridge", Color = "Green", SubgroupId = 22 }
+
             );
+
         }
 
     }

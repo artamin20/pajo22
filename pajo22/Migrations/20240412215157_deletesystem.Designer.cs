@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pajo22.Data;
 
@@ -11,9 +12,11 @@ using pajo22.Data;
 namespace pajo22.Migrations
 {
     [DbContext(typeof(pajo22Context))]
-    partial class pajo22ContextModelSnapshot : ModelSnapshot
+    [Migration("20240412215157_deletesystem")]
+    partial class deletesystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace pajo22.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupModels", (string)null);
+                    b.ToTable("GroupModels");
 
                     b.HasData(
                         new
@@ -91,7 +94,7 @@ namespace pajo22.Migrations
 
                     b.HasIndex("SubgroupId");
 
-                    b.ToTable("ProductModels", (string)null);
+                    b.ToTable("ProductModels");
 
                     b.HasData(
                         new
@@ -266,7 +269,7 @@ namespace pajo22.Migrations
 
                     b.HasIndex("ParentSubGroupId");
 
-                    b.ToTable("SubgroupModels", (string)null);
+                    b.ToTable("SubgroupModels");
 
                     b.HasData(
                         new

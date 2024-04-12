@@ -22,9 +22,33 @@ namespace pajo22.Controllers
         // GET: ProductModels
         public async Task<IActionResult> Index()
         {
-            var pajo22Context = _context.ProductModels.Include(p => p.Subgroup);
-            return View(await pajo22Context.ToListAsync());
+            // کرفتن زیرگروه های فعال
+            var activeSubgroupIds = await _context.SubgroupModels
+                .Where(s => s.Status == SubgroupStatus.Active)
+                .Select(s => s.Id)
+                .ToListAsync();
+
+            
+            var products = await _context.ProductModels
+                .Include(p => p.Subgroup)
+                .ToListAsync();
+
+            // غیرفعال کردن محصولاتی که زیرگروه های آن غیر فعال شده
+            foreach (var product in products)
+            {
+                if (product.Subgroup != null && !activeSubgroupIds.Contains(product.SubgroupId))
+                {
+                    product.Status = ProductStatus.Inactive;
+                }
+            }
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return View(products);
         }
+
+
 
         // GET: ProductModels/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -116,13 +140,12 @@ namespace pajo22.Controllers
             ViewData["SubgroupId"] = new SelectList(_context.SubgroupModels, "Id", "Name", productModels.SubgroupId);
             return View(productModels);
         }
-
         // POST: ProductModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Image,Description,SubgroupId")] ProductModels productModels, IFormFile? productImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Image,Description,SubgroupId,Status")] ProductModels productModels, IFormFile? productImage)
         {
             if (id != productModels.Id)
             {
@@ -133,10 +156,8 @@ namespace pajo22.Controllers
             {
                 try
                 {
-                   
                     var existingProduct = await _context.ProductModels.FindAsync(id);
 
-                    
                     if (productImage != null && productImage.Length > 0)
                     {
                         var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
@@ -160,11 +181,12 @@ namespace pajo22.Controllers
                     }
                     else
                     {
-                        
                         productModels.Image = existingProduct.Image;
                     }
 
-                    
+                    // انتخاب وضعیت محصول
+                    existingProduct.Status = productModels.Status;
+
                     _context.Entry(existingProduct).CurrentValues.SetValues(productModels);
                     await _context.SaveChangesAsync();
                 }
@@ -184,8 +206,6 @@ namespace pajo22.Controllers
             ViewData["SubgroupId"] = new SelectList(_context.SubgroupModels, "Id", "Name", productModels.SubgroupId);
             return View(productModels);
         }
-
-
         // GET: ProductModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

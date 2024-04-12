@@ -55,15 +55,25 @@
                                 @Html.DisplayFor(modelItem => product.Name)
                             </div>
                         </span>
-                        <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
-                            <div>@(product.Price.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))</div>
-                            <div>تومان</div>
-                        </div>
+
+                        @if (product.Status == pajo22.Models.ProductStatus.Inactive)
+                        {
+                            <span class="text-red-500">ناموجود</span>
+                        }
+                        else
+                        {
+                            <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+                                <div>@(product.Price.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))</div>
+                                <div>تومان</div>
+                            </div>
+                        }
+
                         <div class="flex justify-end text-xs opacity-75 pl-3 md:pl-0">
                         </div>
                     </div>
                 </a>
             }
+
         </div>
     </div>
 </div>

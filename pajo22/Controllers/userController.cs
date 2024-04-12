@@ -33,7 +33,7 @@ namespace pajo22.Controllers
             }
 
             // مین و ماکس بودن
-            // مین و ماکس بودن
+            
             decimal? minPrice = products.Min(p => p.Price);
             decimal? maxPrice = products.Max(p => p.Price);
 

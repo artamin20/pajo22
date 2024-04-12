@@ -1,8 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pajo22.Models
 {
+    public enum SubgroupStatus
+    {
+        Active,
+        Delisted,
+        Inactive
+    }
+
     public class SubgroupModels
     {
         public int Id { get; set; }
@@ -12,7 +20,6 @@ namespace pajo22.Models
 
         public int GroupID { get; set; }
 
-        //father subgroup
         public int? ParentSubGroupId { get; set; }
 
         public SubgroupModels? ParentSubGroup { get; set; }
@@ -25,6 +32,6 @@ namespace pajo22.Models
 
         public virtual ICollection<ProductModels>? Product { get; set; }
 
-        
+        public SubgroupStatus Status { get; set; } = SubgroupStatus.Active; // Default status is Active
     }
 }

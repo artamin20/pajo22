@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/head_foot.cshtml";
 }
 
-
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
         <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
@@ -17,7 +16,6 @@
         <div class="md:w-8/12 lg:w-9/12">
             <div class="relative overflow-x-auto shadow-md rounded-xl">
                 <div class="flex justify-between items-center bg-gray-50 px-6 py-4 rounded-t-lg">
-
                     <a asp-action="Create" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">ساختن جدید</a>
                 </div>
                 <table class="w-full text-sm text-right text-gray-600">
@@ -31,6 +29,9 @@
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 نام زیرگروه
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                وضعیت
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 عملیات
@@ -56,6 +57,18 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        @if (item.Status == pajo22.Models.SubgroupStatus.Active)
+                                        {
+                                            <span class="bg-green-500 text-white text-xs rounded-full px-2 py-1">فعال</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="bg-red-500 text-white text-xs rounded-full px-2 py-1">غیرفعال</span>
+                                        }
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex">
