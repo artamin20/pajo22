@@ -46,21 +46,21 @@
                     <span asp-validation-for="Description" class="text-red-500 text-xs italic"></span>
                 </div>
                 <div class="mb-4">
-                    <label asp-for="SubgroupId" class="block text-gray-700 text-sm font-bold mb-2"></label>
+                    <label asp-for="SubgroupId" class="block text-gray-700 text-sm font-bold mb-2">زیرگروه</label>
                     <select asp-for="SubgroupId" class="form-select mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" asp-items="ViewBag.SubgroupId"></select>
                     <span asp-validation-for="SubgroupId" class="text-red-500 text-xs italic"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="Status" class="block text-gray-700 text-sm font-bold mb-2"></label>
+                    <label asp-for="Status" class="block text-gray-700 text-sm font-bold mb-2">وضعیت</label>
                     <select asp-for="Status" class="form-select mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2">
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
+                        <option value="Active">فعال</option>
+                        <option value="Inactive">غیر فعال</option>
                     </select>
                     <span asp-validation-for="Status" class="text-red-500 text-xs italic"></span>
                 </div>
 
-
+                
                 <div class="flex items-center justify-between">
                     <input type="submit" value="ذخیره" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
                     <a asp-action="Index" class="text-gray-600 text-sm hover:underline">بازگشت به لیست</a>

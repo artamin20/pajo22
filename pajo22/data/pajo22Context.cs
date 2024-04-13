@@ -31,14 +31,25 @@ namespace pajo22.Data
             
             modelBuilder.Entity<GroupModels>().HasData(
                 new GroupModels { Id = 111, Name = "کالا های دیجیتال" },
-                new GroupModels { Id = 22, Name = "لوازم خانگی" }
+                new GroupModels { Id = 22, Name = "لوازم خانگی" },
+                new GroupModels { Id = 323, Name = "کالا های پوشیدنی" }
             );
 
            
             modelBuilder.Entity<SubgroupModels>().HasData(
                 new SubgroupModels { Id = 111, Name = "گوشی موبایل", GroupID = 111 },
                 new SubgroupModels { Id = 22, Name = "ماشین لباس شویی", GroupID = 22 },
-                new SubgroupModels { Id = 33, Name = "لب تاب", GroupID = 111 }
+                new SubgroupModels { Id = 33, Name = "لب تاب", GroupID = 111 },
+                new SubgroupModels { Id = 36, Name = "ساعت", GroupID = 323, },
+                new SubgroupModels { Id = 37, Name = "ساعت هوشمند", GroupID = 323, ParentSubGroupId = 36 },
+                new SubgroupModels { Id = 38, Name = "  ساعت هوشمند اپل", GroupID = 323, ParentSubGroupId = 37 },
+                new SubgroupModels { Id = 39, Name = "  عینک", GroupID = 323, },
+                new SubgroupModels { Id = 40, Name = "  عینک های rayban", GroupID = 323, ParentSubGroupId = 39 }
+
+
+
+
+
             );
 
             // دیتا ریزی
@@ -55,8 +66,9 @@ namespace pajo22.Data
                 new ProductModels { Id = 8788, Name = "لپ تاپ 15.6 اینچی ام اس آی مدل Katana 15 B12VEK", Price = 95000000, Image = "/images/f33.png", Description = "msi expensive laptop", Color = "black", SubgroupId = 33 },
                 new ProductModels { Id = 978, Name = "Lenovo Legion لنوو", Price = 48000000, Image = "/images/f1.png", Description = "Lenovo gaming laptop", Color = "black", SubgroupId = 33 },
                 new ProductModels { Id = 1780, Name = "Snowa اسنوا لباس شویی", Price = 45000000, Image = "/images/a1.png", Description = "Snowa Iranian made washing machine", Color = "black", SubgroupId = 22 },
-                new ProductModels { Id = 1781, Name = "Snowa اسنوا یخچال", Price = 12000000, Image = "/images/a2.png", Description = "Snowa fridge", Color = "Green", SubgroupId = 22 }
-
+                new ProductModels { Id = 1781, Name = "ساعت معمولی Q&Q", Price = 2000000, Image = "/images/ap2.png", Description = "normal watch", Color = "blue", SubgroupId = 36 },
+                new ProductModels { Id = 1881, Name = "apple watch ساعت اپل", Price = 42000000, Image = "/images/ap1.png", Description = "apple smart watch", Color = "orange", SubgroupId = 38 },
+                new ProductModels { Id = 199, Name = "عینک کلاسیک rayban", Price = 20000000, Image = "/images/RB1.png", Description = "iconix glasses", Color = "black", SubgroupId = 39 }
             );
 
         }

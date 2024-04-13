@@ -100,13 +100,13 @@ namespace pajo22.Controllers
                     _context.Update(groupModels);
                     await _context.SaveChangesAsync();
 
-                    // Get all subgroups associated with this group
+                    // گرفتن زیر گروه ها 
                     var subgroups = await _context.SubgroupModels
                         .Where(s => s.GroupID == id)
                         .Include(s => s.Product)
                         .ToListAsync();
 
-                    // Update status of subgroups and products based on group status
+                    // بروز رسانی وصعیت زیر گروه ها 
                     if (groupModels.Status == GroupStatus.Active)
                     {
                         // Set subgroups and products to Active
@@ -187,25 +187,25 @@ namespace pajo22.Controllers
                 return NotFound();
             }
 
-            // Get all subgroups associated with this group
+            // گرفتن زیر گروه ها 
             var subgroups = await _context.SubgroupModels
                 .Where(s => s.GroupID == id)
                 .ToListAsync();
 
             foreach (var subgroup in subgroups)
             {
-                // Delete all products associated with this subgroup
+                // حذف تمامی محصولات
                 var products = await _context.ProductModels
                     .Where(p => p.SubgroupId == subgroup.Id)
                     .ToListAsync();
 
                 _context.ProductModels.RemoveRange(products);
 
-                // Delete the subgroup
+                // حذف تمامی زیر گروه ها 
                 _context.SubgroupModels.Remove(subgroup);
             }
 
-            // Delete the group
+            // حذف گروه اصلی
             _context.GroupModels.Remove(groupModels);
 
             await _context.SaveChangesAsync();

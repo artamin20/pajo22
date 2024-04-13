@@ -313,8 +313,8 @@ namespace pajo22.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            // Delete child subgroups and associated products recursively
-            await DeleteChildSubgroup(id, SubgroupStatus.Inactive); // Change the status as needed
+            // Delete child subgroups and associated products 
+            await DeleteChildSubgroup(id, SubgroupStatus.Inactive); // Change the status 
 
             // Remove the main parent subgroup
             var subgroupModel = await _context.SubgroupModels.FindAsync(id);
@@ -356,7 +356,7 @@ namespace pajo22.Controllers
                 _context.ProductModels.Remove(product);
             }
 
-            // Save changes to the database
+            // Save 
             await _context.SaveChangesAsync();
         }
 
