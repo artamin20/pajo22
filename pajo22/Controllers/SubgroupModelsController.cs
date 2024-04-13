@@ -77,7 +77,6 @@ namespace pajo22.Controllers
             return View(subgroups);
         }
 
-
         // GET: SubgroupModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -88,7 +87,9 @@ namespace pajo22.Controllers
 
             var subgroupModels = await _context.SubgroupModels
                 .Include(s => s.GroupModels)
+                .Include(s => s.ParentSubGroup) // Include the parent subgroup
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (subgroupModels == null)
             {
                 return NotFound();
@@ -268,11 +269,25 @@ namespace pajo22.Controllers
 
                 // به روز رسانی فرزندان فرزند والد به صورت بازگشتی
                 await UpdateChildSubgroupsStatus(childSubgroup.Id, status);
-            }
 
+                // به روز رسانی وضعیت محصولات زیرگروه های غیرفعال
+                if (status == SubgroupStatus.Inactive)
+                {
+                    var products = await _context.ProductModels
+                        .Where(p => p.SubgroupId == childSubgroup.Id)
+                        .ToListAsync();
+
+                    foreach (var product in products)
+                    {
+                        product.Status = ProductStatus.Inactive; // Assuming there's a ProductStatus enum
+                        _context.Update(product);
+                    }
+                }
+            }
 
             await _context.SaveChangesAsync();
         }
+
 
 
         // GET: SubgroupModels/Delete/5
@@ -293,21 +308,58 @@ namespace pajo22.Controllers
 
             return View(subgroupModels);
         }
-
         // POST: SubgroupModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var subgroupModels = await _context.SubgroupModels.FindAsync(id);
-            if (subgroupModels != null)
+            // Delete child subgroups and associated products recursively
+            await DeleteChildSubgroup(id, SubgroupStatus.Inactive); // Change the status as needed
+
+            // Remove the main parent subgroup
+            var subgroupModel = await _context.SubgroupModels.FindAsync(id);
+            if (subgroupModel != null)
             {
-                _context.SubgroupModels.Remove(subgroupModels);
+                _context.SubgroupModels.Remove(subgroupModel);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        // Method to recursively delete child subgroups and associated products
+        private async Task DeleteChildSubgroup(int parentId, SubgroupStatus status)
+        {
+            // Get child subgroups of the parent
+            var childSubgroups = await _context.SubgroupModels
+                .Where(s => s.ParentSubGroupId == parentId)
+                .ToListAsync();
+
+            // Iterate through child subgroups
+            foreach (var childSubgroup in childSubgroups)
+            {
+                // Recursively delete child subgroups and associated products
+                await DeleteChildSubgroup(childSubgroup.Id, status);
+
+                // Remove the current child subgroup from the database
+                _context.SubgroupModels.Remove(childSubgroup);
+            }
+
+            // Get products associated with the parent subgroup
+            var products = await _context.ProductModels
+                .Where(p => p.SubgroupId == parentId)
+                .ToListAsync();
+
+            // Remove associated products
+            foreach (var product in products)
+            {
+                _context.ProductModels.Remove(product);
+            }
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+        }
+
 
         private bool SubgroupModelsExists(int id)
         {

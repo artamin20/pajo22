@@ -24,6 +24,11 @@
                     <dt class="text-sm font-semibold text-slate-700 mb-2">نام گروه</dt>
                     <dd class="text-sm">@Html.DisplayFor(model => model.GroupModels.Name)</dd>
                 </div>
+
+                <div class="mb-4">
+                    <dt class="text-sm font-semibold text-slate-700 mb-2">نام گروه والد</dt>
+                    <dd class="text-sm">@Html.DisplayFor(model => model.ParentSubGroup.Name)</dd>
+                </div>
             </dl>
         </div>
 

@@ -25,6 +25,13 @@
                                     <span asp-validation-for="Name" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
+                                    <label class="block mb-2 font-semibold text-xs text-slate-700">وضعیت</label>
+                                    <select asp-for="Status" class="text-sm block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 font-normal text-gray-700 outline-none focus:border-red-300">
+                                        <option value="Active">فعال</option>
+                                        <option value="Inactive">غیرفعال</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <button type="submit" class="block w-full rounded-lg bg-blue-500 text-white text-sm font-bold px-6 py-2 font-normal text-center">ذخیره</button>
                                 </div>
                             </form>
@@ -42,5 +49,7 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -86,7 +86,7 @@ namespace pajo22.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] GroupModels groupModels)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status")] GroupModels groupModels)
         {
             if (id != groupModels.Id)
             {
@@ -98,6 +98,47 @@ namespace pajo22.Controllers
                 try
                 {
                     _context.Update(groupModels);
+                    await _context.SaveChangesAsync();
+
+                    // Get all subgroups associated with this group
+                    var subgroups = await _context.SubgroupModels
+                        .Where(s => s.GroupID == id)
+                        .Include(s => s.Product)
+                        .ToListAsync();
+
+                    // Update status of subgroups and products based on group status
+                    if (groupModels.Status == GroupStatus.Active)
+                    {
+                        // Set subgroups and products to Active
+                        foreach (var subgroup in subgroups)
+                        {
+                            subgroup.Status = SubgroupStatus.Active;
+                            _context.Update(subgroup);
+
+                            foreach (var product in subgroup.Product)
+                            {
+                                product.Status = ProductStatus.Active;
+                                _context.Update(product);
+                            }
+                        }
+                    }
+                    else if (groupModels.Status == GroupStatus.Inactive)
+                    {
+                        // Set subgroups and products to Inactive
+                        foreach (var subgroup in subgroups)
+                        {
+                            subgroup.Status = SubgroupStatus.Inactive;
+                            _context.Update(subgroup);
+
+                            foreach (var product in subgroup.Product)
+                            {
+                                product.Status = ProductStatus.Inactive;
+                                _context.Update(product);
+                            }
+                        }
+                    }
+
+                    // Save changes to the database
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -115,6 +156,7 @@ namespace pajo22.Controllers
             }
             return View(groupModels);
         }
+
 
         // GET: GroupModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -140,14 +182,36 @@ namespace pajo22.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var groupModels = await _context.GroupModels.FindAsync(id);
-            if (groupModels != null)
+            if (groupModels == null)
             {
-                _context.GroupModels.Remove(groupModels);
+                return NotFound();
             }
+
+            // Get all subgroups associated with this group
+            var subgroups = await _context.SubgroupModels
+                .Where(s => s.GroupID == id)
+                .ToListAsync();
+
+            foreach (var subgroup in subgroups)
+            {
+                // Delete all products associated with this subgroup
+                var products = await _context.ProductModels
+                    .Where(p => p.SubgroupId == subgroup.Id)
+                    .ToListAsync();
+
+                _context.ProductModels.RemoveRange(products);
+
+                // Delete the subgroup
+                _context.SubgroupModels.Remove(subgroup);
+            }
+
+            // Delete the group
+            _context.GroupModels.Remove(groupModels);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool GroupModelsExists(int id)
         {

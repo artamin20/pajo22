@@ -12,7 +12,6 @@
         </div>
 
         <div>
-            
             <hr />
             <dl class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="mb-4">
@@ -26,7 +25,13 @@
                 </div>
             </dl>
 
-            <form asp-action="Delete">
+            <!-- Warning message -->
+            <div class="text-red-500 mb-3">
+                حذف کردن این گروه باعث می‌شود تمام زیرگروه‌ها و محصولات مرتبط با آن حذف شوند. پیشنهاد می‌دهیم قبل از حذف، ابتدا زیرگروه‌ها و محصولات را غیرفعال کنید.
+            </div>
+
+
+            <form asp-action="Delete" onsubmit="return confirmDelete()">
                 <input type="hidden" asp-for="Id" />
                 <button type="submit" class="block w-full rounded-lg bg-red-500 text-white text-sm font-bold px-6 py-2 font-normal text-center mb-4">حذف</button>
                 <a asp-action="Index" class="block w-full rounded-lg bg-gray-500 text-white text-sm font-bold px-6 py-2 font-normal text-center">بازگشت به لیست</a>
@@ -34,3 +39,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        return confirm("حدف کردن این گروه باعث می‌شود تمام محصولات و زیرگروه‌های مرتبط به آن تا ابد حذف شوند. پیشنهاد می‌دهیم  به جای حذف کردن غیرفعال کنید. آیا مطمئن هستید که می‌خواهید ادامه دهید؟");
+    }
+</script>
