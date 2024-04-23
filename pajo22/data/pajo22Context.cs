@@ -20,6 +20,21 @@ namespace pajo22.Data
         public DbSet<pajo22.Models.SubgroupModels> SubgroupModels { get; set; } = default!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            {
+                modelBuilder.Entity<AttributeValues>()
+                    .HasOne(av => av.ProductModel)
+                    .WithMany(p => p.AttributeValues)
+                    .HasForeignKey(av => av.ProductModelId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                modelBuilder.Entity<AttributeValues>()
+                    .HasOne(av => av.Attribute)
+                    .WithMany()
+                    .HasForeignKey(av => av.AttributeID)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                
+            }
             base.OnModelCreating(modelBuilder);
 
             
@@ -72,6 +87,8 @@ namespace pajo22.Data
             );
 
         }
+        public DbSet<pajo22.Models.Attributes> Attributes { get; set; } = default!;
+        public DbSet<pajo22.Models.AttributeValues> AttributeValues { get; set; } = default!;
 
     }
 }

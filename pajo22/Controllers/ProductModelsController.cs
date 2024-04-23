@@ -60,7 +60,10 @@ namespace pajo22.Controllers
 
             var productModels = await _context.ProductModels
                 .Include(p => p.Subgroup)
+                .Include(p => p.AttributeValues) // Include the attribute values
+                .ThenInclude(av => av.Attribute) // Include the attribute related to each attribute value
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (productModels == null)
             {
                 return NotFound();
@@ -81,7 +84,7 @@ namespace pajo22.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Image,Description,SubgroupId,color")] ProductModels productModels, IFormFile productImage)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,Image,Description,SubgroupId,color")] ProductModels productModels, IFormFile? productImage)
         {
             if (ModelState.IsValid)
             {

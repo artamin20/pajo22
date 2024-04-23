@@ -1,0 +1,38 @@
+﻿@model IEnumerable<pajo22.Models.Attributes>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-2xl font-semibold mb-4">Attributes</h1>
+
+<p class="mb-4">
+    <a href="@Url.Action("Create")" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create New</a>
+</p>
+
+<div class="overflow-x-auto">
+    <table class="min-w-full bg-white rounded-lg shadow-md">
+        <thead class="bg-gray-800 text-white">
+            <tr>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Attribute Name</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Subgroup</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="text-gray-700">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="border px-4 py-2">@item.AttributeName</td>
+                    <td class="border px-4 py-2">@item.Subgroup.Name</td>
+                    <td class="border px-4 py-2">
+                        <a href="@Url.Action("Edit", new { id = item.AttributeID })" class="text-blue-500 hover:underline mr-2">Edit</a>
+                        <a href="@Url.Action("Details", new { id = item.AttributeID })" class="text-blue-500 hover:underline mr-2">Details</a>
+                        <a href="@Url.Action("Delete", new { id = item.AttributeID })" class="text-red-500 hover:underline">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

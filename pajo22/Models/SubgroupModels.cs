@@ -31,7 +31,10 @@ namespace pajo22.Models
         public virtual GroupModels? GroupModels { get; set; }
 
         public virtual ICollection<ProductModels>? Product { get; set; }
+        // Collection navigation property to access related attributes
+        public virtual ICollection<Attributes>? Attributes { get; set; }
 
-        public SubgroupStatus Status { get; set; } = SubgroupStatus.Active; // Default status is Active
+
+        public SubgroupStatus? Status { get; set; } = SubgroupStatus.Active; // Default status is Active
     }
 }

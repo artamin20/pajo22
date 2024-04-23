@@ -1,0 +1,61 @@
+﻿@model pajo22.Models.SubgroupModels
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/head_foot.cshtml";
+}
+
+<style>
+    /* CSS style for the dark blue button */
+    .bg-blue-900 {
+        background-color: #1a365d; /* Dark blue color */
+    }
+</style>
+
+<div class="max-w-[1440px] mx-auto px-3 bg-white rounded-xl shadow-xl">
+    <!-- White box -->
+    <div class="my-5 lg:my-10 p-3 md:p-5">
+        <div class="bg-gray-200 rounded-xl shadow-md p-3" style="max-width: fit-content;">
+            <!-- Gray nested box with maximum content width -->
+            <div class="flex flex-col md:flex-row gap-y-3 items-center gap-x-2 mb-7">
+                <div class="text-sm opacity-80">
+                    <div>
+                        <div class="text-2xl md:text-3xl opacity-70 mb-5 font-bold text-center">
+                            <!-- Increased font weight -->
+                            <!-- Increased margin bottom -->
+                            ویژگی های زیر گروه @Model.Name
+                        </div>
+
+                        @if (Model.Attributes != null && Model.Attributes.Any())
+                        {
+                            <h1 class="mb-3">ویژگی های موجود</h1> <!-- Increased margin bottom -->
+                            <ul>
+                                @foreach (var attribute in Model.Attributes)
+                                {
+                                    <li class="mb-3">
+                                        <!-- Increased margin bottom -->
+                                        <span class="mr-2 border rounded-lg px-2 py-1">@Html.DisplayFor(modelItem => attribute.AttributeName)</span>
+                                        <span>
+                                            <a href="@Url.Action("Delete", "Attributes", new { id = attribute.AttributeID })" class="border rounded-lg px-2 py-1 bg-red-500 text-white">حذف</a>
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="mb-3">هیچ گونه مشخصاتی اضافه نشده است </p> <!-- Increased margin bottom -->
+                        }
+
+                        <hr class="my-5"> <!-- Increased margin top and bottom -->
+
+                        <p class="mb-5">
+                            <!-- Increased margin bottom -->
+                            <a asp-action="Create" asp-route-subgroupId="@Model.Id" class="mr-2 border rounded-lg px-2 py-1 bg-blue-900 text-white">اضافه کردن ویژگی جدید</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

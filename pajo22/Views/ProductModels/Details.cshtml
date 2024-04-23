@@ -29,6 +29,29 @@
             <dt class="text-gray-600 font-semibold">زیر گروه</dt>
             <dd class="text-gray-800">@Html.DisplayFor(model => model.Subgroup.Name)</dd>
         </dl>
+
+        <hr class="my-4 border-gray-300" />
+
+        <h4 class="text-2xl md:text-3xl opacity-70">ویژگی‌های محصول</h4>
+        <div>
+            <table class="table-auto">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">ویژگی</th>
+                        <th class="px-4 py-2">مقدار</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var attributeValue in Model.AttributeValues)
+                    {
+                        <tr>
+                            <td class="border px-4 py-2">@attributeValue.Attribute.AttributeName</td>
+                            <td class="border px-4 py-2">@attributeValue.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

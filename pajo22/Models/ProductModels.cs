@@ -34,11 +34,13 @@ namespace pajo22.Models
 
         public int SubgroupId { get; set; }
 
-        // ارتباط بین محصولات و زیر گروه
-        [ForeignKey("SubgroupId")]
+        // Navigation property to represent the relationship between ProductModels and SubgroupModels
         public virtual SubgroupModels? Subgroup { get; set; }
 
+        // Navigation property to access related AttributeValues
+        public virtual ICollection<AttributeValues>? AttributeValues { get; set; }
+
         // Enum property to indicate status
-        public ProductStatus Status { get; set; } = ProductStatus.Active;
+        public ProductStatus? Status { get; set; } = ProductStatus.Active;
     }
 }
