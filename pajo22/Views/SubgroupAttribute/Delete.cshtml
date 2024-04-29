@@ -1,0 +1,32 @@
+﻿@model pajo22.Models.Attributes
+
+@{
+    ViewData["Title"] = "Delete Attribute";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Delete Attribute</h2>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Attribute ID
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AttributeID)
+        </dd>
+        <dt class="col-sm-2">
+            Attribute Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AttributeName)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" asp-route-id="@Model.AttributeID" method="post">
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>

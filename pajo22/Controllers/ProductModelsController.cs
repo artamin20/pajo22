@@ -247,5 +247,113 @@ namespace pajo22.Controllers
         {
             return _context.ProductModels.Any(e => e.Id == id);
         }
+        private async Task<ProductModels> GetProductDetails(int? id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+
+            var productModels = await _context.ProductModels
+                .Include(p => p.Subgroup)
+                .Include(p => p.AttributeValues)
+                    .ThenInclude(av => av.Attribute)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            return productModels;
+        }
+
+        // GET: ProductModels/AddAttributeValues/5
+        public async Task<IActionResult> AddAttributeValues(int? productId)
+        {
+            if (productId == null)
+            {
+                return NotFound();
+            }
+
+            var product = await GetProductDetails(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // Retrieve the product's subgroup
+            var subgroup = await _context.SubgroupModels
+                .Include(s => s.Attributes) // Include attributes related to the subgroup
+                .FirstOrDefaultAsync(s => s.Id == product.SubgroupId);
+
+            if (subgroup == null)
+            {
+                return NotFound();
+            }
+
+            // Include attribute values related to each attribute
+            foreach (var attribute in subgroup.Attributes)
+            {
+                _context.Entry(attribute)
+                    .Collection(a => a.AttributeValues)
+                    .Load();
+            }
+
+            // Construct the list of attribute values
+            List<dynamic> productAttributeValues = new List<dynamic>();
+            foreach (var attribute in product.AttributeValues)
+            {
+                productAttributeValues.Add(new { AttributeValueID = attribute.AttributeValueID, Value = attribute.Value }); // Adding both AttributeValueID and Value
+            }
+
+            ViewBag.ProductAttributeValues = productAttributeValues;
+            ViewBag.ProductId = productId;
+            ViewBag.ProductName = product.Name;
+
+            return View(subgroup.Attributes.ToList()); // Convert HashSet to List
+        }
+
+        // GET: ProductAttributeValues/AddValue
+        public IActionResult AddValue(int productId, int attributeId)
+        {
+            // Get product and attribute names
+            var productName = _context.ProductModels.FirstOrDefault(p => p.Id == productId)?.Name;
+            var attributeName = _context.Attributes.FirstOrDefault(a => a.AttributeID == attributeId)?.AttributeName;
+
+            // Pass productId, attributeId, productName, and attributeName to the view
+            ViewBag.ProductId = productId;
+            ViewBag.AttributeId = attributeId;
+            ViewBag.ProductName = productName;
+            ViewBag.AttributeName = attributeName;
+
+            return View();
+        }
+
+        // POST: ProductAttributeValues/AddValue
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddValue(int productId, int attributeId, string value)
+        {
+            if (ModelState.IsValid)
+            {
+                // Create new AttributeValues object
+                var attributeValue = new AttributeValues
+                {
+                    ProductModelId = productId,
+                    AttributeID = attributeId,
+                    Value = value
+                };
+
+                // Add attributeValue to context and save changes
+                _context.Add(attributeValue);
+                await _context.SaveChangesAsync();
+
+                // Redirect to the AddAttributeValues action with the productId parameter
+                return RedirectToAction("AddAttributeValues", new { productId = productId });
+            }
+            // If model state is not valid, return to the view with the existing attribute values
+            return View();
+        }
+
+
+
+
     }
 }

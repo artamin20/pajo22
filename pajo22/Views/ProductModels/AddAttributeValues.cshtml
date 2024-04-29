@@ -1,0 +1,75 @@
+﻿@model List<pajo22.Models.Attributes>
+
+@{
+    ViewData["Title"] = "Add Attribute Values";
+    Layout = "~/Views/Shared/head_foot.cshtml";
+}
+
+<style>
+    /* CSS style for the dark blue button */
+    .bg-blue-900 {
+        background-color: #1a365d; /* Dark blue color */
+    }
+
+    /* CSS style for the button container */
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<div class="max-w-[1440px] mx-auto px-3 bg-white rounded-xl shadow-xl">
+    <!-- White box -->
+    <div class="my-5 lg:my-10 p-3 md:p-5">
+        <div class="bg-gray-200 rounded-xl shadow-md p-3" style="max-width: fit-content;">
+            <h3 class="text-xl md:text-2xl font-semibold mb-5"> :نام محصول @ViewBag.ProductName</h3> <!-- Display product name -->
+            <!-- Gray nested box with maximum content width -->
+            <div class="flex justify-between">
+                <!-- Left column for product attributes -->
+                <div class="w-1/2">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-5"> ویژگی ها</h3> <!-- Increased margin bottom -->
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var attribute in Model)
+                        {
+                            <div class="mb-3">
+                                <label>@Html.DisplayFor(modelItem => attribute.AttributeName)</label>
+                                <div class="button-container">
+                                    <a href="@Url.Action("AddValue", "ProductModels", new { productId = ViewBag.ProductId, attributeId = attribute.AttributeID })" class="mr-2 border rounded-lg px-2 py-1 bg-blue-900 text-white">افزودن</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No attributes found for this product's subgroup.</p>
+                    }
+                </div>
+                <!-- Right column for product attribute values -->
+                <div class="w-1/2 pl-5">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-5"></h3>
+                    @if (ViewBag.ProductAttributeValues != null)
+                    {
+                        <ul>
+                            <br />
+                            @foreach (var value in ViewBag.ProductAttributeValues)
+                            {
+                                <li>
+                                    @value.Value <!-- Displaying only the value -->
+                                    <a href="@Url.Action("Delete", "AttributeValues", new { id = value.AttributeValueID })" class="border rounded-lg px-2 py-1 bg-red-500 text-white">حذف</a>
+                                </li>
+                                <br /> <!-- Add line break between each attribute-value pair -->
+                                <br /> <!-- Add line break between each attribute-value pair -->
+                            }
+
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No attribute values found for this product.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

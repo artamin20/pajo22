@@ -12,8 +12,8 @@ using pajo22.Data;
 namespace pajo22.Migrations
 {
     [DbContext(typeof(pajo22Context))]
-    [Migration("20240422142357_validationfix")]
-    partial class validationfix
+    [Migration("20240424200102_debugging1")]
+    partial class debugging1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

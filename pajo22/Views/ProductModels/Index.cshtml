@@ -11,6 +11,7 @@
             <div class="text-2xl md:text-3xl opacity-70">
             </div>
             <a asp-action="Create" class="block rounded-lg bg-green-500 text-white text-sm font-bold px-6 py-2">اضافه کردن محصول جدید</a>
+
         </div>
 
         <div class="md:w-8/12 lg:w-9/12">
@@ -51,16 +52,22 @@
                                 <td class="px-6 py-4">
                                     @string.Format("{0:N0}", item.Price)
                                 </td>
+
                                 <td class="px-6 py-4">
+                                   
+
+
                                     <!-- نشان دادن تصویر -->
                                     <img src="@item.Image" alt="Product Image" class="w-20 h-20 object-cover rounded-lg">
                                 </td>
                                 <td class="px-6 py-4">
                                     @Html.DisplayFor(modelItem => item.Description)
                                 </td>
+
                                 <td class="px-6 py-4">
                                     @Html.DisplayFor(modelItem => item.Subgroup.Name)
                                 </td>
+
                                 <td class="px-6 py-4">
                                     @if (item.Status == ProductStatus.Active)
                                     {
@@ -71,13 +78,16 @@
                                         <span class="bg-red-500 text-white text-xs rounded-full px-2 py-1">غیرفعال</span>
                                     }
                                 </td>
+
                                 <td class="px-6 py-4">
                                     <div class="flex">
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-blue-500 text-white">ویرایش</a>
                                         <a asp-action="Details" asp-route-id="@item.Id" class="mr-2 border rounded-lg px-2 py-1 bg-indigo-500 text-purple">جزئیات</a>
                                         <a asp-action="Delete" asp-route-id="@item.Id" class="border rounded-lg px-2 py-1 bg-red-500 text-white">حذف محصول</a>
+                                        <a asp-action="AddAttributeValues" asp-route-productId="@item.Id" class="mr-2 border rounded-lg px-2 py-1" style="background-color: purple; color: white;">افزودن ویژگی‌ها</a>
                                     </div>
                                 </td>
+
                             </tr>
                         }
                     </tbody>

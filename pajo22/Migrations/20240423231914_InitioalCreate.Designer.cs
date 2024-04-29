@@ -12,8 +12,8 @@ using pajo22.Data;
 namespace pajo22.Migrations
 {
     [DbContext(typeof(pajo22Context))]
-    [Migration("20240418171811_Initial")]
-    partial class Initial
+    [Migration("20240423231914_InitioalCreate")]
+    partial class InitioalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,7 +144,7 @@ namespace pajo22.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
                     b.Property<int>("SubgroupId")
@@ -342,7 +342,7 @@ namespace pajo22.Migrations
                     b.Property<int?>("ParentSubGroupId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

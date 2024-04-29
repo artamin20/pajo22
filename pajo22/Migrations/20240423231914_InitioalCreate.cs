@@ -7,7 +7,7 @@
 namespace pajo22.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitioalCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,7 @@ namespace pajo22.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GroupID = table.Column<int>(type: "int", nullable: false),
                     ParentSubGroupId = table.Column<int>(type: "int", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,7 +85,7 @@ namespace pajo22.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubgroupId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

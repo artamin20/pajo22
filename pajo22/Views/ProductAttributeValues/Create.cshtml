@@ -1,0 +1,25 @@
+﻿@model List<pajo22.Models.AttributeValues>
+
+@{
+    ViewData["Title"] = "Add Attribute Values";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Attribute Values</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model[0].ProductModelId)
+
+    <div class="form-group">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <label>@Html.DisplayFor(modelItem => Model[i].Attribute.AttributeName)</label>
+            <input type="text" name="attributeValues[@i].Value" class="form-control" />
+            <span asp-validation-for="attributeValues[@i].Value" class="text-danger"></span>
+            @Html.HiddenFor(modelItem => Model[i].AttributeID)
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}

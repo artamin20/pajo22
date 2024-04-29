@@ -1,0 +1,37 @@
+﻿@model pajo22.Models.AttributeValues
+
+@{
+    ViewData["Title"] = "Add Value";
+    Layout = "~/Views/Shared/head_foot.cshtml";
+}
+
+<div class="max-w-[1440px] mx-auto px-3">
+    <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+        <h2 class="text-2xl font-bold mb-4">Add Value</h2>
+
+        <form method="post" asp-action="AddValue">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="productId" value="@ViewBag.ProductId" />
+            <input type="hidden" name="attributeId" value="@ViewBag.AttributeId" />
+
+            <div class="mb-4">
+                <label class="block text-lg font-medium text-gray-700 mb-1">نام محصول</label>
+                <p class="text-gray-800">@ViewBag.ProductName</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-lg font-medium text-gray-700 mb-1">Attribute Name:</label>
+                <p class="text-gray-800">@ViewBag.AttributeName</p>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Value" class="control-label"></label>
+                <input asp-for="Value" class="form-input mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 px-3 py-2" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
