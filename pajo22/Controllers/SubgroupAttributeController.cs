@@ -83,7 +83,7 @@ namespace pajo22.Controllers
         // POST: SubgroupAttribute/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var attribute = await _context.Attributes.FindAsync(id);
             if (attribute == null)
@@ -100,7 +100,8 @@ namespace pajo22.Controllers
 
             _context.Attributes.Remove(attribute);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { subgroupId = attribute.SubgroupId });
+            return RedirectToAction("Index", "SubgroupAttribute", new { subgroupId = attribute.SubgroupId });
         }
+
     }
 }

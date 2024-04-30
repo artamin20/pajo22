@@ -2,31 +2,29 @@
 
 @{
     ViewData["Title"] = "Delete Attribute";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/head_foot.cshtml";
 }
 
-<div class="container">
-    <h2>Delete Attribute</h2>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Attribute ID
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AttributeID)
-        </dd>
-        <dt class="col-sm-2">
-            Attribute Name
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AttributeName)
-        </dd>
-    </dl>
+<div class="max-w-[1440px] mx-auto px-3 bg-white rounded-xl shadow-xl">
+    <!-- White box -->
+    <div class="my-5 lg:my-10 p-3 md:p-5">
+        <div class="bg-gray-200 rounded-xl shadow-md p-3">
+            <!-- Gray nested box -->
+            <h2 class="text-2xl font-semibold mb-3">حذف مشخصات</h2>
+            <hr class="mb-5" />
 
-    <form asp-action="DeleteConfirmed" asp-route-id="@Model.AttributeID" method="post">
-        <div class="form-group">
-            <input type="submit" value="Delete" class="btn btn-danger" />
-            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+
+                <dt class="font-semibold">نام ویژگی</dt>
+                <dd>@Html.DisplayFor(model => model.AttributeName)</dd>
+            </dl>
+
+            <form asp-action="DeleteConfirmed" asp-route-id="@Model.AttributeID" method="post">
+                <div class="mt-5">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">Delete</button>
+                    <a asp-action="Index" asp-controller="SubgroupAttribute" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg ml-2">Back to List</a>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>

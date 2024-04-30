@@ -36,7 +36,8 @@
                                         <!-- Increased margin bottom -->
                                         <span class="mr-2 border rounded-lg px-2 py-1">@Html.DisplayFor(modelItem => attribute.AttributeName)</span>
                                         <span>
-                                            <a href="@Url.Action("Delete", "Attributes", new { id = attribute.AttributeID })" class="border rounded-lg px-2 py-1 bg-red-500 text-white">حذف</a>
+                                            <a href="@Url.Action("Delete", "SubgroupAttribute", new { id = attribute.AttributeID })" class="border rounded-lg px-2 py-1 bg-red-500 text-white">حذف</a>
+
                                         </span>
                                     </li>
                                 }
