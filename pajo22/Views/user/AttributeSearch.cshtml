@@ -1,0 +1,30 @@
+﻿@model IEnumerable<pajo22.Models.AttributeValues>
+
+@{
+    ViewData["Title"] = "Attribute Values Search Results";
+    Layout = "~/Views/Shared/head_foot.cshtml";
+}
+
+<div class="max-w-[1440px] mx-auto px-3">
+    <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+        <h1 class="text-2xl font-semibold mb-5">Attribute Values Search Results</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            @foreach (var attributeValue in Model)
+            {
+                <div class="bg-white shadow-md rounded-md overflow-hidden">
+                    <img src="@Html.DisplayFor(modelItem => attributeValue.ProductModel.Image)" alt="Product Image" class="w-full h-48 object-contain">
+                    <div class="p-2">
+                        <h2 class="text-base font-semibold mb-1">@attributeValue.ProductModel.Name</h2>
+                        <p class="text-sm text-gray-500">@attributeValue.Attribute.AttributeName: @attributeValue.Value</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (!Model.Any())
+        {
+            <p class="text-gray-500 mt-4">No attribute values found matching the search criteria.</p>
+        }
+    </div>
+</div>

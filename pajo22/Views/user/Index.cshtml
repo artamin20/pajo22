@@ -1,4 +1,4 @@
-﻿@model IEnumerable<pajo22.Models.ProductModels>
+﻿@model MainPageViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">اعمال فیلتر ها</button>
-                <a href="/" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-3 inline-block">نشان دادن تمامی قیمت ها</a>
+                <a href="/" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-3 inline-block">نشان دادن تمامی محصولات </a>
             </form>
             <div class="bg-white mb-4 px-3 py-3 border rounded-xl">
-            @foreach (var mainGroup in ViewBag.MainGroups)
+            @foreach (var mainGroup in ViewBag.MainGroups22)
             {
                     <h2 class="mr-2 border rounded-lg px-2 py-1" style="background-color: gray; color: white;">@mainGroup.Name</h2>
 
@@ -54,6 +54,35 @@
                 </ul>
             }
             </div>
+            <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-5">
+            <form asp-controller="user" asp-action="AttributeSearch" method="post">
+                <div class="form-group">
+                    <label for="attributeName">Select Attribute:</label>
+                    <select class="form-control" id="attributeName" name="attributeName">
+                        <option value="">-- Select Attribute --</option>
+                        @foreach (var attributeName in ViewBag.AttributeNames)
+                        {
+                            <option value="@attributeName">@attributeName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="attributeValue">Attribute Value:</label>
+                    <input type="text" class="form-control" id="attributeValue" name="attributeValue" placeholder="Enter attribute value">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+
+
+            </div>
+
+
+                
+
+
         </div>
 
 

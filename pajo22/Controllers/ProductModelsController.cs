@@ -296,7 +296,7 @@ namespace pajo22.Controllers
                     .Load();
             }
 
-            // Construct the list of attribute values
+            // list of attribute values
             List<dynamic> productAttributeValues = new List<dynamic>();
             foreach (var attribute in product.AttributeValues)
             {
@@ -348,7 +348,7 @@ namespace pajo22.Controllers
                 // Redirect to the AddAttributeValues action with the productId parameter
                 return RedirectToAction("AddAttributeValues", new { productId = productId });
             }
-            // If model state is not valid, return to the view with the existing attribute values
+            
             return View();
         }
 
